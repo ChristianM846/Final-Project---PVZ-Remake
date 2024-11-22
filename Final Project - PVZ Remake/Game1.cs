@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Final_Project___PVZ_Remake
 {
@@ -19,6 +20,7 @@ namespace Final_Project___PVZ_Remake
         Texture2D titleScreen;
         Texture2D frontYard;
         Texture2D plantRoster;
+        Texture2D gridHighlight;
 
         Rectangle window;
         Rectangle plantRosterRect;
@@ -31,6 +33,11 @@ namespace Final_Project___PVZ_Remake
         SpriteFont titleFont;
         SpriteFont sunFont;
 
+        List<PlantGrid> grid;
+
+
+
+
         Screen screen;
 
         enum Screen
@@ -42,7 +49,6 @@ namespace Final_Project___PVZ_Remake
             GameOver,
             Thanks
         }
-
 
         public Game1()
         {
@@ -62,7 +68,22 @@ namespace Final_Project___PVZ_Remake
 
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
+            // Iniialize Class Lists
+            grid = new List<PlantGrid>();
+
             base.Initialize();
+
+            // Make Lists in order of appearance above
+
+            for (int y = 0; y < 5; y++)
+            {
+                for (int x = 0; x < 9; x++)
+                {
+                    grid.Add(new PlantGrid(gridHighlight, new Rectangle(202 + (x * 64), 105 + (y * 84), 50, 50)));
+                }
+            }
+
+
         }
 
         protected override void LoadContent()
@@ -74,9 +95,12 @@ namespace Final_Project___PVZ_Remake
             titleFont = Content.Load<SpriteFont>("Fonts/TitleFont2");
 
             //Game
+                //Base Things That Will Always Be There
             frontYard = Content.Load<Texture2D>("Images/FrontYard");
             plantRoster = Content.Load<Texture2D>("Images/PlantRoster");
             sunFont = Content.Load<SpriteFont>("Fonts/SunFontSP");
+                //Things That Will Only Be On Screen Somethimes
+            gridHighlight = Content.Load<Texture2D>("Images/rectangle");
 
             //SoundEffects
             introTheme = Content.Load<SoundEffect>("Sounds/IntroTheme");
@@ -106,7 +130,10 @@ namespace Final_Project___PVZ_Remake
             }
             else if (screen == Screen.Intro)
             {
-
+                for (int i = 0; i < grid.Count; i++)
+                {
+                    grid[i].Update(mouseState);
+                }
             }
 
 
@@ -164,6 +191,10 @@ namespace Final_Project___PVZ_Remake
                 _spriteBatch.Draw(frontYard, window, Color.White);
                 _spriteBatch.Draw(plantRoster, plantRosterRect, Color.White);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+                foreach (PlantGrid square in grid)
+                {
+                    square.Draw(_spriteBatch);
+                }
             }
 
 
