@@ -17,13 +17,16 @@ namespace Final_Project___PVZ_Remake
         MouseState mouseState, prevMouseState;
         KeyboardState keyboardState;
 
-        Texture2D titleScreen;
-        Texture2D frontYard;
-        Texture2D plantRoster;
-        Texture2D gridHighlight;
+        Texture2D titleScreenTexture;
+        Texture2D frontYardTexture;
+        Texture2D plantRosterTexture;
+        Texture2D gridHighlightTexture;
+        Texture2D shovelIconTexture;
+        Texture2D mowerTexture;
 
         Rectangle window;
         Rectangle plantRosterRect;
+        Rectangle shovelIconRect;
 
         Vector2 sunBankLocation;
 
@@ -34,8 +37,9 @@ namespace Final_Project___PVZ_Remake
         SpriteFont sunFont;
 
         List<PlantGrid> grid;
+        List<Mower> mowers;
 
-
+        ShovelIcon shovelIcon;
 
 
         Screen screen;
@@ -68,8 +72,12 @@ namespace Final_Project___PVZ_Remake
 
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
-            // Iniialize Class Lists
+            // Initialize Class Lists
             grid = new List<PlantGrid>();
+            mowers = new List<Mower>();
+
+            //Initialize Class object Rectangles
+            shovelIconRect = new Rectangle(651, 2, 70, 70);
 
             base.Initialize();
 
@@ -79,10 +87,18 @@ namespace Final_Project___PVZ_Remake
             {
                 for (int x = 0; x < 9; x++)
                 {
-                    grid.Add(new PlantGrid(gridHighlight, new Rectangle(202 + (x * 64), 105 + (y * 84), 50, 50)));
+                    grid.Add(new PlantGrid(gridHighlightTexture, new Rectangle(202 + (x * 64), 105 + (y * 83), 50, 50)));
                 }
             }
 
+            for (int i = 0; i < 5; i++)
+            {
+                mowers.Add(new Mower(mowerTexture, new Rectangle(150, 105 + (i * 83), 40, 40)));
+            }
+
+            // Make Class Objects here, in order of appearance
+
+            shovelIcon = new ShovelIcon(shovelIconTexture, shovelIconRect);
 
         }
 
@@ -91,16 +107,19 @@ namespace Final_Project___PVZ_Remake
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //TitleScreen
-            titleScreen = Content.Load<Texture2D>("Images/TitleScreen");
+            titleScreenTexture = Content.Load<Texture2D>("Images/TitleScreen");
             titleFont = Content.Load<SpriteFont>("Fonts/TitleFont2");
 
             //Game
-                //Base Things That Will Always Be There
-            frontYard = Content.Load<Texture2D>("Images/FrontYard");
-            plantRoster = Content.Load<Texture2D>("Images/PlantRoster");
+            //Base Things That Will Always Be There
+            frontYardTexture = Content.Load<Texture2D>("Images/FrontYard");
+            plantRosterTexture = Content.Load<Texture2D>("Images/PlantRoster");
+            shovelIconTexture = Content.Load<Texture2D>("Images/shovelIcon");
+            mowerTexture = Content.Load<Texture2D>("Images/LawnMower");
             sunFont = Content.Load<SpriteFont>("Fonts/SunFontSP");
-                //Things That Will Only Be On Screen Somethimes
-            gridHighlight = Content.Load<Texture2D>("Images/rectangle");
+
+            //Things That Will Only Be On Screen Somethimes
+            gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
 
             //SoundEffects
             introTheme = Content.Load<SoundEffect>("Sounds/IntroTheme");
@@ -183,18 +202,26 @@ namespace Final_Project___PVZ_Remake
 
             if (screen == Screen.Title)
             {
-                _spriteBatch.Draw(titleScreen, window, Color.White);
+                _spriteBatch.Draw(titleScreenTexture, window, Color.White);
                 _spriteBatch.DrawString(titleFont, "A Jank Remake", new Vector2(100, 100), Color.Black);
             }
             else if (screen == Screen.Intro)
             {
-                _spriteBatch.Draw(frontYard, window, Color.White);
-                _spriteBatch.Draw(plantRoster, plantRosterRect, Color.White);
+                _spriteBatch.Draw(frontYardTexture, window, Color.White);
+                _spriteBatch.Draw(plantRosterTexture, plantRosterRect, Color.White);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+
                 foreach (PlantGrid square in grid)
                 {
                     square.Draw(_spriteBatch);
                 }
+
+                foreach (Mower mower in mowers)
+                {
+                    mower.Draw(_spriteBatch);
+                }
+                
+                shovelIcon.Draw(_spriteBatch);
             }
 
 

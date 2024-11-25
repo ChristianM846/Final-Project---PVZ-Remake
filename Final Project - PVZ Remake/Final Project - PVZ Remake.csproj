@@ -14,6 +14,7 @@
     <None Remove="Content\Fonts\TitleFont.spritefont" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
+    <None Remove="ShovelIcon.ca" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
