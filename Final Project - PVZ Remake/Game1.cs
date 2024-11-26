@@ -17,29 +17,55 @@ namespace Final_Project___PVZ_Remake
         MouseState mouseState, prevMouseState;
         KeyboardState keyboardState;
 
+        //Title Screen Stuff
         Texture2D titleScreenTexture;
+        Rectangle window;
+
+        //Game Stuff (Always visible)
         Texture2D frontYardTexture;
         Texture2D plantRosterTexture;
-        Texture2D gridHighlightTexture;
         Texture2D shovelIconTexture;
         Texture2D mowerTexture;
+        Texture2D sunflowerSeedTexture;
+        Texture2D peashooterSeedTexture;
+        Texture2D wallnutSeedTexture;
+        Texture2D potatoMineSeedTexture;
+        Texture2D cherryBombSeedTexture;
+        Texture2D snowPeaSeedTexture;
+        Texture2D repeaterSeedTexture;
 
-        Rectangle window;
         Rectangle plantRosterRect;
-        Rectangle shovelIconRect;
 
         Vector2 sunBankLocation;
 
+        //Game Stuff (Sometimes Visible)
+        Texture2D gridHighlightTexture;
+
+
+
+
+        //Sounds and Fonts
         SoundEffect introTheme;
         SoundEffectInstance introThemeInstance;
 
         SpriteFont titleFont;
         SpriteFont sunFont;
 
+        // Class Objects
         List<PlantGrid> grid;
         List<Mower> mowers;
+        List<SeedPacket> seeds;
+
 
         ShovelIcon shovelIcon;
+        SeedPacket sunflowerSeed;
+        SeedPacket peashooterSeed;
+        SeedPacket wallnutSeed;
+        SeedPacket potatoMineSeed;
+        SeedPacket cherryBombSeed;
+        SeedPacket snowPeaSeed;
+        SeedPacket repeaterSeed;
+
 
 
         Screen screen;
@@ -75,9 +101,10 @@ namespace Final_Project___PVZ_Remake
             // Initialize Class Lists
             grid = new List<PlantGrid>();
             mowers = new List<Mower>();
+            seeds = new List<SeedPacket>();
 
             //Initialize Class object Rectangles
-            shovelIconRect = new Rectangle(651, 2, 70, 70);
+
 
             base.Initialize();
 
@@ -96,9 +123,24 @@ namespace Final_Project___PVZ_Remake
                 mowers.Add(new Mower(mowerTexture, new Rectangle(150, 105 + (i * 83), 40, 40)));
             }
 
-            // Make Class Objects here, in order of appearance
+            seeds.Add(sunflowerSeed = new SeedPacket(sunflowerSeedTexture, 0, 50, 7.5f, new Rectangle(260, 10, 35, 50)));
+            seeds.Add(peashooterSeed = new SeedPacket(peashooterSeedTexture, 1, 100, 7.5f, new Rectangle(298, 10, 35, 50)));
+            seeds.Add(wallnutSeed = new SeedPacket(wallnutSeedTexture, 2, 50, 30f, new Rectangle(336, 10, 35, 50)));
+            seeds.Add(potatoMineSeed = new SeedPacket(potatoMineSeedTexture, 3, 25, 30f, new Rectangle(374, 10, 35, 50)));
+            seeds.Add(cherryBombSeed = new SeedPacket(cherryBombSeedTexture, 4, 150, 50f, new Rectangle(412, 10, 35, 50)));
+            seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
+            seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
 
-            shovelIcon = new ShovelIcon(shovelIconTexture, shovelIconRect);
+
+
+
+            // Make Other Class Objects here, in order of appearance
+
+            shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle (651, 2, 70, 70));
+
+
+
+
 
         }
 
@@ -116,7 +158,15 @@ namespace Final_Project___PVZ_Remake
             plantRosterTexture = Content.Load<Texture2D>("Images/PlantRoster");
             shovelIconTexture = Content.Load<Texture2D>("Images/shovelIcon");
             mowerTexture = Content.Load<Texture2D>("Images/LawnMower");
+            sunflowerSeedTexture = Content.Load<Texture2D>("Images/SunflowerSeedPacket");
+            peashooterSeedTexture = Content.Load<Texture2D>("Images/PeaShooterSeedPacket");
+            wallnutSeedTexture = Content.Load<Texture2D>("Images/WallnutSeedPacket");
+            potatoMineSeedTexture = Content.Load<Texture2D>("Images/PotatoMineSeedPacket");
+            cherryBombSeedTexture = Content.Load<Texture2D>("Images/CherryBombSeedPacket");
+            snowPeaSeedTexture = Content.Load<Texture2D>("Images/SnowPeaSeedPacket");
+            repeaterSeedTexture = Content.Load<Texture2D>("Images/RepeaterSeedPacket");
             sunFont = Content.Load<SpriteFont>("Fonts/SunFontSP");
+
 
             //Things That Will Only Be On Screen Somethimes
             gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
@@ -221,6 +271,11 @@ namespace Final_Project___PVZ_Remake
                     mower.Draw(_spriteBatch);
                 }
                 
+                foreach (SeedPacket seed in seeds)
+                {
+                    seed.Draw(_spriteBatch);
+                }
+
                 shovelIcon.Draw(_spriteBatch);
             }
 
