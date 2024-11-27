@@ -49,6 +49,7 @@ namespace Final_Project___PVZ_Remake
         SoundEffectInstance introThemeInstance;
 
         SpriteFont titleFont;
+        SpriteFont introFont;
         SpriteFont sunFont;
 
         // Class Objects
@@ -136,7 +137,7 @@ namespace Final_Project___PVZ_Remake
 
             // Make Other Class Objects here, in order of appearance
 
-            shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle (651, 2, 70, 70));
+            shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
 
 
 
@@ -148,9 +149,12 @@ namespace Final_Project___PVZ_Remake
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //TitleScreen
+            //Title Screen
             titleScreenTexture = Content.Load<Texture2D>("Images/TitleScreen");
             titleFont = Content.Load<SpriteFont>("Fonts/TitleFont2");
+
+            //Intro Screen
+            introFont = Content.Load<SpriteFont>("Fonts/IntroFont");
 
             //Game
             //Base Things That Will Always Be There
@@ -198,6 +202,10 @@ namespace Final_Project___PVZ_Remake
                 }
             }
             else if (screen == Screen.Intro)
+            {
+
+            }
+            else if (screen == Screen.Game)
             {
                 for (int i = 0; i < grid.Count; i++)
                 {
@@ -260,6 +268,23 @@ namespace Final_Project___PVZ_Remake
                 _spriteBatch.Draw(frontYardTexture, window, Color.White);
                 _spriteBatch.Draw(plantRosterTexture, plantRosterRect, Color.White);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+                _spriteBatch.DrawString(titleFont, "Quick Tutorial", new Vector2(300, 250), Color.Black);
+                _spriteBatch.DrawString(introFont, "Spend your sun to plant plants to defend your house", new Vector2(200, 90), Color.Black);
+                _spriteBatch.DrawString(introFont, "Sunflowers produce sun, Wallnuts tank damage,", new Vector2(200, 110), Color.Black);
+                _spriteBatch.DrawString(introFont, "and all the other deal damage", new Vector2(200, 130), Color.Black);
+                _spriteBatch.DrawString(introFont, "Zombies will come from the right side of the lawn", new Vector2(250, 450), Color.Black);
+                _spriteBatch.DrawString(introFont, "Defeat them!", new Vector2(410, 470), Color.Black);
+                _spriteBatch.DrawString(introFont, "Use the", new Vector2(725, 10), Color.Black);
+                _spriteBatch.DrawString(introFont, "Shovel", new Vector2(725, 30), Color.Black);
+                _spriteBatch.DrawString(introFont, "to dig", new Vector2(725, 50), Color.Black);
+                _spriteBatch.DrawString(introFont, "plants up", new Vector2(715, 70), Color.Black);
+                _spriteBatch.DrawString(introFont, "This is your house", new Vector2(10, 170), Color.Black);
+                _spriteBatch.DrawString(introFont, "If the zombies", new Vector2(10, 190), Color.Black);
+                _spriteBatch.DrawString(introFont, "get here, you lose", new Vector2(10, 210), Color.Black);
+                _spriteBatch.DrawString(introFont, "The Mowers will", new Vector2(10, 400), Color.Black);
+                _spriteBatch.DrawString(introFont, "defeat all zombies", new Vector2(10, 420), Color.Black);
+                _spriteBatch.DrawString(introFont, "in a lane", new Vector2(10, 440), Color.Black);
+                _spriteBatch.DrawString(introFont, "but only once", new Vector2(10, 460), Color.Black);
 
                 foreach (PlantGrid square in grid)
                 {
@@ -270,7 +295,7 @@ namespace Final_Project___PVZ_Remake
                 {
                     mower.Draw(_spriteBatch);
                 }
-                
+
                 foreach (SeedPacket seed in seeds)
                 {
                     seed.Draw(_spriteBatch);
