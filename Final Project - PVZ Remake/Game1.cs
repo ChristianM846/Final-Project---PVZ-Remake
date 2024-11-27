@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace Final_Project___PVZ_Remake
@@ -11,6 +12,8 @@ namespace Final_Project___PVZ_Remake
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        Random generator = new Random();
 
         int sun;
 
@@ -93,6 +96,7 @@ namespace Final_Project___PVZ_Remake
 
         protected override void Initialize()
         {
+            generator = new Random();
             screen = Screen.Title;
             window = new Rectangle(0, 0, 800, 520);
             sun = 50;
@@ -203,7 +207,11 @@ namespace Final_Project___PVZ_Remake
             }
             else if (screen == Screen.Intro)
             {
-
+                if (keyboardState.IsKeyDown(Keys.Enter))
+                {
+                    introThemeInstance.Stop();
+                    screen = Screen.Game;
+                }
             }
             else if (screen == Screen.Game)
             {
@@ -269,6 +277,8 @@ namespace Final_Project___PVZ_Remake
                 _spriteBatch.Draw(plantRosterTexture, plantRosterRect, Color.White);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
                 _spriteBatch.DrawString(titleFont, "Quick Tutorial", new Vector2(300, 250), Color.Black);
+                _spriteBatch.DrawString(titleFont, "Press Enter to", new Vector2(310, 280), Color.Black);
+                _spriteBatch.DrawString(titleFont, "continue", new Vector2(370, 310), Color.Black);
                 _spriteBatch.DrawString(introFont, "Spend your sun to plant plants to defend your house", new Vector2(200, 90), Color.Black);
                 _spriteBatch.DrawString(introFont, "Sunflowers produce sun, Wallnuts tank damage,", new Vector2(200, 110), Color.Black);
                 _spriteBatch.DrawString(introFont, "and all the other deal damage", new Vector2(200, 130), Color.Black);
@@ -302,6 +312,31 @@ namespace Final_Project___PVZ_Remake
                 }
 
                 shovelIcon.Draw(_spriteBatch);
+            }
+            else if (screen == Screen.Game)
+            {
+                _spriteBatch.Draw(frontYardTexture, window, Color.White);
+                _spriteBatch.Draw(plantRosterTexture, plantRosterRect, Color.White);
+
+                _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+
+                foreach (PlantGrid square in grid)
+                {
+                    square.Draw(_spriteBatch);
+                }
+
+                foreach (Mower mower in mowers)
+                {
+                    mower.Draw(_spriteBatch);
+                }
+
+                foreach (SeedPacket seed in seeds)
+                {
+                    seed.Draw(_spriteBatch);
+                }
+
+                shovelIcon.Draw(_spriteBatch);
+
             }
 
 
