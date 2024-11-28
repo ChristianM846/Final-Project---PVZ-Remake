@@ -16,6 +16,9 @@ namespace Final_Project___PVZ_Remake
         Random generator = new Random();
 
         int sun;
+        int song;
+        float time;
+        float levelTime;
 
         MouseState mouseState, prevMouseState;
         KeyboardState keyboardState;
@@ -50,6 +53,10 @@ namespace Final_Project___PVZ_Remake
         //Sounds and Fonts
         SoundEffect introTheme;
         SoundEffectInstance introThemeInstance;
+        SoundEffect grasswalkTheme;
+        SoundEffectInstance grasswalkThemeInstance;
+        SoundEffect loonboonTheme;
+        SoundEffectInstance loonboonThemeInstance;
 
         SpriteFont titleFont;
         SpriteFont introFont;
@@ -100,6 +107,8 @@ namespace Final_Project___PVZ_Remake
             screen = Screen.Title;
             window = new Rectangle(0, 0, 800, 520);
             sun = 50;
+            time = 0;
+            levelTime = 0;
 
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
@@ -142,11 +151,6 @@ namespace Final_Project___PVZ_Remake
             // Make Other Class Objects here, in order of appearance
 
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
-
-
-
-
-
         }
 
         protected override void LoadContent()
@@ -182,7 +186,10 @@ namespace Final_Project___PVZ_Remake
             //SoundEffects
             introTheme = Content.Load<SoundEffect>("Sounds/IntroTheme");
             introThemeInstance = introTheme.CreateInstance();
-
+            grasswalkTheme = Content.Load<SoundEffect>("Sounds/Grasswalk");
+            grasswalkThemeInstance = grasswalkTheme.CreateInstance();
+            loonboonTheme = Content.Load<SoundEffect>("Sounds/Loonboon");
+            loonboonThemeInstance = loonboonTheme.CreateInstance();
         }
 
         protected override void Update(GameTime gameTime)
@@ -211,13 +218,41 @@ namespace Final_Project___PVZ_Remake
                 {
                     introThemeInstance.Stop();
                     screen = Screen.Game;
+                    time = (float)gameTime.TotalGameTime.TotalSeconds;
+                    song = generator.Next(1, 3);
                 }
             }
             else if (screen == Screen.Game)
             {
-                for (int i = 0; i < grid.Count; i++)
+                levelTime = (float)gameTime.TotalGameTime.TotalSeconds - time;
+                if (levelTime > 3)
                 {
-                    grid[i].Update(mouseState);
+                    if (grasswalkThemeInstance.State == SoundState.Stopped && loonboonThemeInstance.State == SoundState.Stopped)
+                    {
+                        if (song == 1)
+                        {
+                            grasswalkThemeInstance.Play();
+                            song = 2;
+                        }
+                        else if (song == 2)
+                        {
+                            loonboonThemeInstance.Play();
+                            song = 1;
+                        }
+                    }
+
+
+                    for (int i = 0; i < grid.Count; i++)
+                    {
+                        grid[i].Update(mouseState);
+                    }
+
+
+
+
+
+
+
                 }
             }
 
@@ -336,6 +371,19 @@ namespace Final_Project___PVZ_Remake
                 }
 
                 shovelIcon.Draw(_spriteBatch);
+
+                if (levelTime < 1)
+                {
+                    _spriteBatch.DrawString(titleFont, "Ready", new Vector2(400, 250), Color.Red);
+                }
+                else if (levelTime > 1 && levelTime < 2)
+                {
+                    _spriteBatch.DrawString(titleFont, "Set", new Vector2(425, 250), Color.Red);
+                }
+                else if (levelTime > 2 && levelTime < 3)
+                {
+                    _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
+                }
 
             }
 
