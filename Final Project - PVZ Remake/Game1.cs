@@ -46,9 +46,9 @@ namespace Final_Project___PVZ_Remake
 
         //Game Stuff (Sometimes Visible)
         Texture2D gridHighlightTexture;
+        Texture2D sunTexture;
 
-
-
+        Rectangle fallingSunRect;
 
         //Sounds and Fonts
         SoundEffect introTheme;
@@ -76,6 +76,8 @@ namespace Final_Project___PVZ_Remake
         SeedPacket cherryBombSeed;
         SeedPacket snowPeaSeed;
         SeedPacket repeaterSeed;
+        //shadows here
+        FallingSun fallingSun;
 
 
 
@@ -118,6 +120,7 @@ namespace Final_Project___PVZ_Remake
             seeds = new List<SeedPacket>();
 
             //Initialize Class object Rectangles
+            fallingSunRect = new Rectangle(300, 300, 40, 40);
 
 
             base.Initialize();
@@ -148,9 +151,10 @@ namespace Final_Project___PVZ_Remake
 
 
 
-            // Make Other Class Objects here, in order of appearance
-
+            // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
+            fallingSun = new FallingSun(sunTexture, fallingSunRect);
+
         }
 
         protected override void LoadContent()
@@ -182,6 +186,7 @@ namespace Final_Project___PVZ_Remake
 
             //Things That Will Only Be On Screen Somethimes
             gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
+            sunTexture = Content.Load<Texture2D>("Images/Sun");
 
             //SoundEffects
             introTheme = Content.Load<SoundEffect>("Sounds/IntroTheme");
@@ -219,6 +224,7 @@ namespace Final_Project___PVZ_Remake
                     introThemeInstance.Stop();
                     screen = Screen.Game;
                     time = (float)gameTime.TotalGameTime.TotalSeconds;
+                    fallingSun.TimeStamp = time;
                     song = generator.Next(1, 3);
                 }
             }
@@ -247,7 +253,7 @@ namespace Final_Project___PVZ_Remake
                         grid[i].Update(mouseState);
                     }
 
-
+                    sun += fallingSun.Update(gameTime, mouseState);
 
 
 
@@ -364,6 +370,12 @@ namespace Final_Project___PVZ_Remake
                 {
                     mower.Draw(_spriteBatch);
                 }
+                
+                //plants
+
+                //zombies
+
+                fallingSun.Draw(_spriteBatch);
 
                 foreach (SeedPacket seed in seeds)
                 {
@@ -384,7 +396,6 @@ namespace Final_Project___PVZ_Remake
                 {
                     _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
                 }
-
             }
 
 
