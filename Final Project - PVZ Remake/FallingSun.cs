@@ -28,18 +28,41 @@ namespace Final_Project___PVZ_Remake
             _location = location;
             _speed = Vector2.Zero;
             _floor = 500;
-            _sunValue = 25;
+            _sunValue = 0;
         }
 
-        public int Update(GameTime gameTime, MouseState mouseState)
+        public void Update(GameTime gameTime, MouseState mouseState)
         {
+            _sunTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 2);
+            
+            _sunValue = 0;
+
             if (_location.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
             {
                 _location.Y = -50;
-                return 25;
+                _speed.Y = 0;
+                _sunValue = 25;
+                _timeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
+
             }
+
+            if ((_sunTimer == 10))
+            {
+                _floor = generator.Next(150, 480);
+                _location.X = generator.Next(200, 700);
+                _speed.Y = 1;
+            }
+
+            _location.Offset(_speed);
+
+            if (_location.Bottom >= _floor)
+            {
+                _location.Y = _floor - 40;
+                _speed.Y = 0;
+            }
+
             _prevMouseState = mouseState;
-            return 0;
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -51,6 +74,16 @@ namespace Final_Project___PVZ_Remake
         {
             get { return _timeStamp; }
             set { _timeStamp = value; }
+        }
+
+        public int SunValue
+        {
+            get { return _sunValue; }
+        }
+
+        public Rectangle FallingSunRect
+        {
+            get { return _location; }
         }
     }
 }

@@ -57,6 +57,8 @@ namespace Final_Project___PVZ_Remake
         SoundEffectInstance grasswalkThemeInstance;
         SoundEffect loonboonTheme;
         SoundEffectInstance loonboonThemeInstance;
+        SoundEffect sunPickup;
+        SoundEffectInstance sunPickupInstance;
 
         SpriteFont titleFont;
         SpriteFont introFont;
@@ -120,7 +122,7 @@ namespace Final_Project___PVZ_Remake
             seeds = new List<SeedPacket>();
 
             //Initialize Class object Rectangles
-            fallingSunRect = new Rectangle(300, 300, 40, 40);
+            fallingSunRect = new Rectangle(300, -100, 40, 40);
 
 
             base.Initialize();
@@ -195,6 +197,8 @@ namespace Final_Project___PVZ_Remake
             grasswalkThemeInstance = grasswalkTheme.CreateInstance();
             loonboonTheme = Content.Load<SoundEffect>("Sounds/Loonboon");
             loonboonThemeInstance = loonboonTheme.CreateInstance();
+            sunPickup = Content.Load<SoundEffect>("Sounds/SunPickup");
+            sunPickupInstance = sunPickup.CreateInstance();
         }
 
         protected override void Update(GameTime gameTime)
@@ -226,6 +230,7 @@ namespace Final_Project___PVZ_Remake
                     time = (float)gameTime.TotalGameTime.TotalSeconds;
                     fallingSun.TimeStamp = time;
                     song = generator.Next(1, 3);
+                    fallingSun.TimeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
                 }
             }
             else if (screen == Screen.Game)
@@ -247,14 +252,18 @@ namespace Final_Project___PVZ_Remake
                         }
                     }
 
-
                     for (int i = 0; i < grid.Count; i++)
                     {
                         grid[i].Update(mouseState);
                     }
 
-                    sun += fallingSun.Update(gameTime, mouseState);
+                    if (fallingSun.FallingSunRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                    {
+                        sunPickup.Play();
+                    }
 
+                    fallingSun.Update(gameTime, mouseState);
+                    sun += fallingSun.SunValue;
 
 
 
@@ -357,25 +366,22 @@ namespace Final_Project___PVZ_Remake
             else if (screen == Screen.Game)
             {
                 _spriteBatch.Draw(frontYardTexture, window, Color.White);
+                fallingSun.Draw(_spriteBatch);
                 _spriteBatch.Draw(plantRosterTexture, plantRosterRect, Color.White);
-
-                _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
 
                 foreach (PlantGrid square in grid)
                 {
                     square.Draw(_spriteBatch);
                 }
 
-                foreach (Mower mower in mowers)
-                {
-                    mower.Draw(_spriteBatch);
-                }
-                
                 //plants
 
                 //zombies
 
-                fallingSun.Draw(_spriteBatch);
+                foreach (Mower mower in mowers)
+                {
+                    mower.Draw(_spriteBatch);
+                }            
 
                 foreach (SeedPacket seed in seeds)
                 {
@@ -383,6 +389,7 @@ namespace Final_Project___PVZ_Remake
                 }
 
                 shovelIcon.Draw(_spriteBatch);
+                _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
 
                 if (levelTime < 1)
                 {
