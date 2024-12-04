@@ -17,6 +17,7 @@ namespace Final_Project___PVZ_Remake
         private int _sunCost;
         private float _coolDown;
         private float _coolDownTimer;
+        private float _timeStamp;
         private Color _color;
 
         public SeedPacket (Texture2D texture, int plant, int cost, float cooldown, Rectangle location)
@@ -30,7 +31,7 @@ namespace Final_Project___PVZ_Remake
             _color = Color.White;
         }
 
-        public void Update (MouseState mouseState)
+        public void Update (GameTime gameTime,MouseState mouseState)
         {
 
         }
