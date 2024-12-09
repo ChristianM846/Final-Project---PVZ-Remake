@@ -69,7 +69,7 @@ namespace Final_Project___PVZ_Remake
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(_zombieTexture, _location, Color.White);
         }
 
 

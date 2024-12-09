@@ -47,6 +47,12 @@ namespace Final_Project___PVZ_Remake
         //Game Stuff (Sometimes Visible)
         Texture2D gridHighlightTexture;
         Texture2D sunTexture;
+        //plant textures
+
+        Texture2D browncoatTexture;
+        Texture2D coneheadTexture;
+        Texture2D bucketheadTexture;
+        Texture2D flagZombieTexture;
 
         Rectangle fallingSunRect;
 
@@ -64,10 +70,16 @@ namespace Final_Project___PVZ_Remake
         SpriteFont introFont;
         SpriteFont sunFont;
 
+        // Lists (Not class objects)
+        List<int> level1;
+        List<int> level2;
+        List<int> level3;
+
         // Class Objects
         List<PlantGrid> grid;
         List<Mower> mowers;
         List<SeedPacket> seeds;
+        List<Zombie> zombies;
 
 
         ShovelIcon shovelIcon;
@@ -80,6 +92,7 @@ namespace Final_Project___PVZ_Remake
         SeedPacket repeaterSeed;
         //shadows here
         FallingSun fallingSun;
+        Zombie testZombie;
 
 
 
@@ -116,10 +129,16 @@ namespace Final_Project___PVZ_Remake
 
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
+            // Non-Class lists
+            level1 = new List<int>() {1, 1, 1, 2, 2, 3, 3, 3, 4, 10, 5, 5, 5, 6, 6, 7, 7, 7, 8, 20 };
+            level2 = new List<int>() {1, 1, 2, 2, 3, 3, 4, 4, 5, 12, 6, 6, 7, 7, 8, 8, 9, 9, 10, 24 };
+            level3 = new List<int>() {1, 1, 2, 2, 3, 3, 4, 5, 6, 14, 7, 8, 8, 9, 10, 10, 11, 12, 12, 28 };
+
             // Initialize Class Lists
             grid = new List<PlantGrid>();
             mowers = new List<Mower>();
             seeds = new List<SeedPacket>();
+            zombies = new List<Zombie>();
 
             //Initialize Class object Rectangles
             fallingSunRect = new Rectangle(300, -100, 40, 40);
@@ -156,6 +175,7 @@ namespace Final_Project___PVZ_Remake
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
             fallingSun = new FallingSun(sunTexture, fallingSunRect);
+            testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 1);
 
         }
 
@@ -189,6 +209,12 @@ namespace Final_Project___PVZ_Remake
             //Things That Will Only Be On Screen Somethimes
             gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
             sunTexture = Content.Load<Texture2D>("Images/Sun");
+            //plant textures
+
+            browncoatTexture = Content.Load<Texture2D>("Images/Zombie");
+            coneheadTexture = Content.Load<Texture2D>("Images/ConeHeadZombie");
+            bucketheadTexture = Content.Load<Texture2D>("Images/BucketheadZombie");
+            flagZombieTexture = Content.Load<Texture2D>("Images/FlagZombie");
 
             //SoundEffects
             introTheme = Content.Load<SoundEffect>("Sounds/IntroTheme");
@@ -403,6 +429,8 @@ namespace Final_Project___PVZ_Remake
                 {
                     _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
                 }
+
+                testZombie.Draw(_spriteBatch);
             }
 
 
