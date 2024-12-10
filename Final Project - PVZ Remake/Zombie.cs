@@ -16,8 +16,9 @@ namespace Final_Project___PVZ_Remake
         //private Texture2D _bucketheadTexture;
         //private Texture2D _flagZombieTexture;
         private Rectangle _location;
-        private float _speed;
-        private float _health;
+        private int _moveCounter;
+        private int _moveCountSpeed;
+        private int _health;
         private int _pointValue;
         private int _zombieType;
 
@@ -29,42 +30,58 @@ namespace Final_Project___PVZ_Remake
             //_flagZombieTexture = flagZombieTexture;
             _location = location;
             _zombieType = zombieType;
+            _moveCounter = 0;
 
             if (_zombieType == 1)
             {
                 _zombieTexture = browncoatTexture;
                 _health = 181;
-                _speed = 0.25f;
+                _moveCountSpeed = 4;
                 _pointValue = 1;
             }
             else if (_zombieType == 2)
             {
                 _zombieTexture = coneheadTexture;
                 _health = 551;
-                _speed = 0.25f;
+                _moveCountSpeed = 4;
                 _pointValue = 2;
             }
             else if (_zombieType == 3)
             {
                 _zombieTexture = bucketheadTexture;
                 _health = 1281;
-                _speed = 0.25f;
+                _moveCountSpeed = 4;
                 _pointValue = 4;
             }
             else if (_zombieType == 4)
             {
                 _zombieTexture = flagZombieTexture;
                 _health = 181;
-                _speed = 0.33f;
+                _moveCountSpeed = 3;
                 _pointValue = 0;
             }
 
 
         }
 
-        public void Update()
+        public void Update(GameTime gameTime, List<Mower> mowers)
         {
+            _moveCounter += 1;
 
+            if (_moveCounter == _moveCountSpeed)
+            {
+                _location.Offset(-1, 0);
+                _moveCounter = 0;
+            }
+
+            for (int m = 0; m < mowers.Count; m++)
+            { 
+                if (_location.Intersects(mowers[m].MowerRect))
+                {
+                    _health = 0;
+                    mowers[m].MowerSpeed = new Vector2(2, 0);
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -72,6 +89,20 @@ namespace Final_Project___PVZ_Remake
             spriteBatch.Draw(_zombieTexture, _location, Color.White);
         }
 
+        public int Health 
+        {
+            get { return _health; }
+        }
 
+        public int Points
+        {
+            get { return _pointValue; }
+        }
+
+        public Rectangle ZombieRect
+        {
+            get { return _location; }
+            set { _location = value; }
+        }
     }
 }

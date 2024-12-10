@@ -30,7 +30,7 @@ namespace Final_Project___PVZ_Remake
             spriteBatch.Draw(_iconTexture, _location, Color.White);
         }
 
-        public Rectangle iconRect
+        public Rectangle IconRect
         {
             get { return _location; }
         }

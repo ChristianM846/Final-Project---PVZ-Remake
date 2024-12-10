@@ -47,6 +47,9 @@ namespace Final_Project___PVZ_Remake
         //Game Stuff (Sometimes Visible)
         Texture2D gridHighlightTexture;
         Texture2D sunTexture;
+
+        Rectangle trashSpot;
+
         //plant textures
 
         Texture2D browncoatTexture;
@@ -123,6 +126,7 @@ namespace Final_Project___PVZ_Remake
             generator = new Random();
             screen = Screen.Title;
             window = new Rectangle(0, 0, 800, 520);
+            trashSpot = new Rectangle(100, 1000, 100, 100);
             sun = 50;
             time = 0;
             levelTime = 0;
@@ -169,13 +173,13 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
 
-
+            zombies.Add(testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 4));
 
 
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
             fallingSun = new FallingSun(sunTexture, fallingSunRect);
-            testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 1);
+            
 
         }
 
@@ -291,7 +295,29 @@ namespace Final_Project___PVZ_Remake
                     fallingSun.Update(gameTime, mouseState);
                     sun += fallingSun.SunValue;
 
+                    for (int m = 0; m < mowers.Count; m++)
+                    {
+                        mowers[m].Update(zombies);
 
+                        if (mowers[m].MowerRect.Left == window.Right)
+                        {
+                            mowers[m].MowerSpeed = Vector2.Zero;
+                            mowers[m].MowerRect = trashSpot;
+                        }
+                    }
+
+                    for (int z = 0; z < zombies.Count; z++)
+                    {
+                        zombies[z].Update(gameTime, mowers);
+
+                        if (zombies[z].Health <= 0)
+                        {
+                            zombies[z].ZombieRect = trashSpot;
+                            zombies.RemoveAt(z);
+                            z--;
+                        }
+
+                    }
 
 
                 }

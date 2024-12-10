@@ -40,7 +40,7 @@ namespace Final_Project___PVZ_Remake
             spritebatch.Draw(_highlight, _gridSquare, Color.White * _transparency);
         }
 
-        public Rectangle gridSquare
+        public Rectangle GridSquare
         {
             get { return _gridSquare; }
         }
