@@ -24,7 +24,6 @@ namespace Final_Project___PVZ_Remake
         public void Update(List<Zombie> zombies)
         {
             _location.Offset(_mowerSpeed);
-
         }
 
         public void Draw(SpriteBatch spriteBatch)

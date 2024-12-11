@@ -126,7 +126,7 @@ namespace Final_Project___PVZ_Remake
             generator = new Random();
             screen = Screen.Title;
             window = new Rectangle(0, 0, 800, 520);
-            trashSpot = new Rectangle(100, 1000, 100, 100);
+            trashSpot = new Rectangle(1000, 1000, 100, 100);
             sun = 50;
             time = 0;
             levelTime = 0;
@@ -173,7 +173,7 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
 
-            zombies.Add(testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 4));
+            zombies.Add(testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 3));
 
 
             // Make Other Class Objects here
@@ -354,14 +354,6 @@ namespace Final_Project___PVZ_Remake
             prevMouseState = Mouse.GetState();
             base.Update(gameTime);
         }
-
-
-        public void UpdateLevel(GameTime gameTime, MouseState mouseState)
-        {
-
-        }
-
-
 
         protected override void Draw(GameTime gameTime)
         {
