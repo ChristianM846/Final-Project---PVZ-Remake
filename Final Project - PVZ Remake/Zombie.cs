@@ -18,7 +18,7 @@ namespace Final_Project___PVZ_Remake
         private int _pointValue;
         private int _zombieType;
 
-        public Zombie(Texture2D browncoatTexture, Texture2D coneheadTexture, Texture2D bucketheadTexture, Texture2D flagZombieTexture, Rectangle location, int zombieType)
+        public Zombie(Texture2D zombieTexture, Rectangle location, int zombieType)
         {
             _location = location;
             _zombieType = zombieType;
@@ -26,28 +26,28 @@ namespace Final_Project___PVZ_Remake
 
             if (_zombieType == 1)
             {
-                _zombieTexture = browncoatTexture;
+                _zombieTexture = zombieTexture;
                 _health = 181;
                 _moveCountSpeed = 5;
                 _pointValue = 1;
             }
             else if (_zombieType == 2)
             {
-                _zombieTexture = coneheadTexture;
+                _zombieTexture = zombieTexture;
                 _health = 551;
                 _moveCountSpeed = 5;
                 _pointValue = 2;
             }
             else if (_zombieType == 3)
             {
-                _zombieTexture = bucketheadTexture;
+                _zombieTexture = zombieTexture;
                 _health = 1281;
                 _moveCountSpeed = 5;
                 _pointValue = 4;
             }
             else if (_zombieType == 4)
             {
-                _zombieTexture = flagZombieTexture;
+                _zombieTexture = zombieTexture;
                 _health = 181;
                 _moveCountSpeed = 4;
                 _pointValue = 0;

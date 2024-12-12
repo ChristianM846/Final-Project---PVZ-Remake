@@ -96,7 +96,7 @@ namespace Final_Project___PVZ_Remake
         //shadows here
         FallingSun fallingSun;
         Zombie testZombie;
-
+        ZombieSpawner level1Spawner;
 
 
         Screen screen;
@@ -134,9 +134,9 @@ namespace Final_Project___PVZ_Remake
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
             // Non-Class lists
-            level1 = new List<int>() {1, 1, 1, 2, 2, 3, 3, 3, 4, 10, 5, 5, 5, 6, 6, 7, 7, 7, 8, 20 };
-            level2 = new List<int>() {1, 1, 2, 2, 3, 3, 4, 4, 5, 12, 6, 6, 7, 7, 8, 8, 9, 9, 10, 24 };
-            level3 = new List<int>() {1, 1, 2, 2, 3, 3, 4, 5, 6, 14, 7, 8, 8, 9, 10, 10, 11, 12, 12, 28 };
+            level1 = new List<int>() {0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 10, 5, 5, 5, 6, 6, 7, 7, 7, 8, 20, 0};
+            level2 = new List<int>() {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 12, 6, 6, 7, 7, 8, 8, 9, 9, 10, 24, 0};
+            level3 = new List<int>() {0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 14, 7, 8, 8, 9, 10, 10, 11, 12, 12, 28, 0};
 
             // Initialize Class Lists
             grid = new List<PlantGrid>();
@@ -173,13 +173,13 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
 
-            zombies.Add(testZombie = new Zombie(browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture, new Rectangle(600, 410, 50, 80), 3));
+            zombies.Add(testZombie = new Zombie(browncoatTexture, new Rectangle(600, 410, 50, 80), 1));
 
 
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
             fallingSun = new FallingSun(sunTexture, fallingSunRect);
-            
+            level1Spawner = new ZombieSpawner(level1, browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture);
 
         }
 
@@ -312,6 +312,7 @@ namespace Final_Project___PVZ_Remake
 
                         if (zombies[z].Health <= 0)
                         {
+                            level1Spawner.PointCount += zombies[z].Points;
                             zombies[z].ZombieRect = trashSpot;
                             zombies.RemoveAt(z);
                             z--;
@@ -319,7 +320,12 @@ namespace Final_Project___PVZ_Remake
 
                     }
 
+                    level1Spawner.Update(zombies);
 
+                    if (level1Spawner.Wave == 21)
+                    {
+                        screen = Screen.Thanks;
+                    }
                 }
             }
 
