@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Final_Project___PVZ_Remake
 {
@@ -40,7 +37,6 @@ namespace Final_Project___PVZ_Remake
             {
                 _winPointGoal += value;
             }
-
         }
 
         public void Update(List<Zombie> zombies)
@@ -61,7 +57,7 @@ namespace Final_Project___PVZ_Remake
 
                 while (_pointCounter > 0)
                 {
-                    _spawnLane = _generator.Next(1,6);
+                    _spawnLane = _generator.Next(1, 6);
 
                     if (_spawnLane == 1)
                     {
@@ -84,11 +80,11 @@ namespace Final_Project___PVZ_Remake
                         _spawnHeight = 410;
                     }
 
-                    _spawnChoice =  _generator.Next(1,11);
+                    _spawnChoice = _generator.Next(1, 11);
 
                     if (_spawnChoice >= 1 && _spawnChoice <= 5 && _pointCounter >= 1)
                     {
-                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800  + (_zombiesSpawned * 50), _spawnHeight, 50, 80) , 1));
+                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800 + (_zombiesSpawned * 50), _spawnHeight, 50, 80), 1));
                         _zombiesSpawned++;
                         _pointCounter -= 1;
                     }
@@ -104,8 +100,6 @@ namespace Final_Project___PVZ_Remake
                         _zombiesSpawned++;
                         _pointCounter -= 4;
                     }
-
-
                 }
             }
         }
