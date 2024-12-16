@@ -87,7 +87,7 @@ namespace Final_Project___PVZ_Remake
 
                     if (_spawnChoice >= 1 && _spawnChoice <= 5 && _pointCounter >= 1)
                     {
-                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(500  + (_zombiesSpawned * 10), _spawnHeight, 50, 80) , 1));
+                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800  + (_zombiesSpawned * 10), _spawnHeight, 50, 80) , 1));
                         _zombiesSpawned++;
                         _pointCounter -= 1;
                     }

@@ -173,9 +173,6 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
 
-            zombies.Add(testZombie = new Zombie(browncoatTexture, new Rectangle(600, 410, 50, 80), 1));
-
-
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
             fallingSun = new FallingSun(sunTexture, fallingSunRect);
@@ -426,7 +423,10 @@ namespace Final_Project___PVZ_Remake
 
                 //plants
 
-                //zombies
+                foreach (Zombie zombie in zombies)
+                {
+                    zombie.Draw(_spriteBatch);
+                }
 
                 foreach (Mower mower in mowers)
                 {
@@ -454,7 +454,7 @@ namespace Final_Project___PVZ_Remake
                     _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
                 }
 
-                testZombie.Draw(_spriteBatch);
+                
             }
 
 
