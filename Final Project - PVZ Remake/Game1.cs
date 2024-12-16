@@ -67,7 +67,8 @@ namespace Final_Project___PVZ_Remake
         SoundEffect loonboonTheme;
         SoundEffectInstance loonboonThemeInstance;
         SoundEffect sunPickup;
-        SoundEffectInstance sunPickupInstance;
+        SoundEffect gameOverTheme;
+
 
         SpriteFont titleFont;
         SpriteFont introFont;
@@ -225,7 +226,7 @@ namespace Final_Project___PVZ_Remake
             loonboonTheme = Content.Load<SoundEffect>("Sounds/Loonboon");
             loonboonThemeInstance = loonboonTheme.CreateInstance();
             sunPickup = Content.Load<SoundEffect>("Sounds/SunPickup");
-            sunPickupInstance = sunPickup.CreateInstance();
+            gameOverTheme = Content.Load<SoundEffect>("Sounds/LoseMusic");
         }
 
         protected override void Update(GameTime gameTime)
@@ -323,6 +324,18 @@ namespace Final_Project___PVZ_Remake
                     {
                         screen = Screen.Thanks;
                     }
+
+                    foreach (Zombie zombie in zombies)
+                    {
+                        if (zombie.ZombieRect.X == 150)
+                        {
+                            screen = Screen.GameOver;
+                            grasswalkThemeInstance.Stop();
+                            loonboonThemeInstance.Stop();
+                            gameOverTheme.Play();
+                        }
+                    }
+
                 }
             }
 

@@ -54,7 +54,8 @@ namespace Final_Project___PVZ_Remake
 
                 if (_wave == 10 || _wave == 20)
                 {
-                    //spawn flag zombie
+                    zombies.Add(new Zombie(_flagZombieTexture, new Rectangle(800, _spawnHeight, 50, 80), 4));
+                    _zombiesSpawned++;
                 }
 
 
@@ -87,28 +88,25 @@ namespace Final_Project___PVZ_Remake
 
                     if (_spawnChoice >= 1 && _spawnChoice <= 5 && _pointCounter >= 1)
                     {
-                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800  + (_zombiesSpawned * 10), _spawnHeight, 50, 80) , 1));
+                        zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800  + (_zombiesSpawned * 50), _spawnHeight, 50, 80) , 1));
                         _zombiesSpawned++;
                         _pointCounter -= 1;
                     }
-                    //else if (_spawnChoice >= 6 && _spawnChoice <= 8 && _pointCounter >= 2)
-                    //{
-                    //    //spawn conehead
-                    //    _zombiesSpawned++;
-                    //    _pointCounter -= 2;
-                    //}
-                    //else if (_spawnChoice >= 9 && _spawnChoice <= 10 && _pointCounter >= 4)
-                    //{
-                    //    //spawn buckethead
-                    //    _zombiesSpawned++;
-                    //    _pointCounter -= 4;
-                    //}
+                    else if (_spawnChoice >= 6 && _spawnChoice <= 8 && _pointCounter >= 2)
+                    {
+                        zombies.Add(new Zombie(_coneheadTexture, new Rectangle(800 + (_zombiesSpawned * 50), _spawnHeight, 50, 80), 2));
+                        _zombiesSpawned++;
+                        _pointCounter -= 2;
+                    }
+                    else if (_spawnChoice >= 9 && _spawnChoice <= 10 && _pointCounter >= 4)
+                    {
+                        zombies.Add(new Zombie(_bucketheadTexture, new Rectangle(800 + (_zombiesSpawned * 50), _spawnHeight, 50, 80), 3));
+                        _zombiesSpawned++;
+                        _pointCounter -= 4;
+                    }
 
 
                 }
-
-
-
             }
         }
 
