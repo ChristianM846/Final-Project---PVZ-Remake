@@ -166,13 +166,13 @@ namespace Final_Project___PVZ_Remake
                 mowers.Add(new Mower(mowerTexture, new Rectangle(150, 105 + (i * 83), 40, 40)));
             }
 
-            seeds.Add(sunflowerSeed = new SeedPacket(sunflowerSeedTexture, 0, 50, 7.5f, new Rectangle(260, 10, 35, 50)));
-            seeds.Add(peashooterSeed = new SeedPacket(peashooterSeedTexture, 1, 100, 7.5f, new Rectangle(298, 10, 35, 50)));
-            seeds.Add(wallnutSeed = new SeedPacket(wallnutSeedTexture, 2, 50, 30f, new Rectangle(336, 10, 35, 50)));
-            seeds.Add(potatoMineSeed = new SeedPacket(potatoMineSeedTexture, 3, 25, 30f, new Rectangle(374, 10, 35, 50)));
-            seeds.Add(cherryBombSeed = new SeedPacket(cherryBombSeedTexture, 4, 150, 50f, new Rectangle(412, 10, 35, 50)));
-            seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50)));
-            seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50)));
+            seeds.Add(sunflowerSeed = new SeedPacket(sunflowerSeedTexture, 0, 50, 7.5f, new Rectangle(260, 10, 35, 50), false));
+            seeds.Add(peashooterSeed = new SeedPacket(peashooterSeedTexture, 1, 100, 7.5f, new Rectangle(298, 10, 35, 50), false));
+            seeds.Add(wallnutSeed = new SeedPacket(wallnutSeedTexture, 2, 50, 30f, new Rectangle(336, 10, 35, 50), false));
+            seeds.Add(potatoMineSeed = new SeedPacket(potatoMineSeedTexture, 3, 25, 30f, new Rectangle(374, 10, 35, 50), true));
+            seeds.Add(cherryBombSeed = new SeedPacket(cherryBombSeedTexture, 4, 150, 50f, new Rectangle(412, 10, 35, 50), true));
+            seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
+            seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
 
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
@@ -303,6 +303,13 @@ namespace Final_Project___PVZ_Remake
                             mowers[m].MowerRect = trashSpot;
                         }
                     }
+
+                    foreach (SeedPacket seed in seeds)
+                    {
+                        seed.Update(gameTime, mouseState, sun);
+                    }
+
+
 
                     for (int z = 0; z < zombies.Count; z++)
                     {
