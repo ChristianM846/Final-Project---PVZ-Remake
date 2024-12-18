@@ -13,6 +13,7 @@ namespace Final_Project___PVZ_Remake
     public class SeedPacket
     {
         private Texture2D _packetTexture;
+        private Texture2D _associatedPlantTexture;
         private Rectangle _location;
         private int _plant;
         private int _sunCost;
@@ -24,9 +25,10 @@ namespace Final_Project___PVZ_Remake
         MouseState _prevMouseState;
         private Color _color;
 
-        public SeedPacket (Texture2D texture, int plant, int cost, float cooldown, Rectangle location, bool locked)
+        public SeedPacket (Texture2D texture, Texture2D plantTexture, int plant, int cost, float cooldown, Rectangle location, bool locked)
         {
             _packetTexture = texture;
+            _associatedPlantTexture = plantTexture;
             _location = location;
             _plant = plant;
             _sunCost = cost;
@@ -37,7 +39,7 @@ namespace Final_Project___PVZ_Remake
             _color = Color.White;
         }
 
-        public void Update (GameTime gameTime, MouseState mouseState, int sun)
+        public void Update (GameTime gameTime, MouseState mouseState, int sun, List<PlantShadow> shadows)
         {
             if (_locked)
             {
@@ -61,7 +63,8 @@ namespace Final_Project___PVZ_Remake
 
                 if (_location.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && !_cooling && sun >= _sunCost)
                 {
-                    //make shadow
+                    shadows[_plant].ShadowRectX = mouseState.Position.X - 25;
+                    shadows[_plant].ShadowRectY = mouseState.Position.Y - 25;
                 }
 
 
@@ -75,5 +78,12 @@ namespace Final_Project___PVZ_Remake
         {
             spriteBatch.Draw(_packetTexture, _location, _color);
         }
+
+        public float TimeStamp
+        {
+            get { return _timeStamp; }
+            set { _timeStamp = value; }
+        }
+
     }
 }

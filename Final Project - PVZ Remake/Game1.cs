@@ -50,14 +50,26 @@ namespace Final_Project___PVZ_Remake
 
         Rectangle trashSpot;
 
+
         //plant textures
+        Texture2D sunflowerTexture;
+        Texture2D peashooterTexture;
+        Texture2D wallnutTexture;
+        Texture2D potatoMineTexture;
+        Texture2D potatoMineArmingTexture;
+        Texture2D cherryBombTexture;
+        Texture2D snowPeaTexture;
+        Texture2D repeaterTexture;
+
 
         Texture2D browncoatTexture;
         Texture2D coneheadTexture;
         Texture2D bucketheadTexture;
         Texture2D flagZombieTexture;
 
+        // Hidden Game Things
         Rectangle fallingSunRect;
+        Rectangle shadowHome;
 
         //Sounds and Fonts
         SoundEffect introTheme;
@@ -83,10 +95,12 @@ namespace Final_Project___PVZ_Remake
         List<PlantGrid> grid;
         List<Mower> mowers;
         List<SeedPacket> seeds;
+        List<PlantShadow> shadows;
         List<Zombie> zombies;
 
 
         ShovelIcon shovelIcon;
+        //Seed Packets
         SeedPacket sunflowerSeed;
         SeedPacket peashooterSeed;
         SeedPacket wallnutSeed;
@@ -95,8 +109,15 @@ namespace Final_Project___PVZ_Remake
         SeedPacket snowPeaSeed;
         SeedPacket repeaterSeed;
         //shadows here
+        PlantShadow sunflowerShadow;
+        PlantShadow peashooterShadow;
+        PlantShadow wallnutShadow;
+        PlantShadow potatoMineShadow;
+        PlantShadow cherryBombShadow;
+        PlantShadow snowPeaShadow;
+        PlantShadow repeaterShadow;
+        //Other
         FallingSun fallingSun;
-        Zombie testZombie;
         ZombieSpawner level1Spawner;
 
 
@@ -135,18 +156,20 @@ namespace Final_Project___PVZ_Remake
             plantRosterRect = new Rectangle(200, 2, 450, 70);
 
             // Non-Class lists
-            level1 = new List<int>() {0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 10, 5, 5, 5, 6, 6, 7, 7, 7, 8, 20, 0};
-            level2 = new List<int>() {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 12, 6, 6, 7, 7, 8, 8, 9, 9, 10, 24, 0};
-            level3 = new List<int>() {0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 14, 7, 8, 8, 9, 10, 10, 11, 12, 12, 28, 0};
+            level1 = new List<int>() { 0, 1, 1, 1, 2, 2, 3, 3, 3, 4, 10, 5, 5, 5, 6, 6, 7, 7, 7, 8, 20, 0 };
+            level2 = new List<int>() { 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 12, 6, 6, 7, 7, 8, 8, 9, 9, 10, 24, 0 };
+            level3 = new List<int>() { 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 14, 7, 8, 8, 9, 10, 10, 11, 12, 12, 28, 0 };
 
             // Initialize Class Lists
             grid = new List<PlantGrid>();
             mowers = new List<Mower>();
             seeds = new List<SeedPacket>();
+            shadows = new List<PlantShadow>();
             zombies = new List<Zombie>();
 
             //Initialize Class object Rectangles
             fallingSunRect = new Rectangle(300, -100, 40, 40);
+            shadowHome = new Rectangle(100, -200, 50, 50);
 
 
             base.Initialize();
@@ -166,13 +189,22 @@ namespace Final_Project___PVZ_Remake
                 mowers.Add(new Mower(mowerTexture, new Rectangle(150, 105 + (i * 83), 40, 40)));
             }
 
-            seeds.Add(sunflowerSeed = new SeedPacket(sunflowerSeedTexture, 0, 50, 7.5f, new Rectangle(260, 10, 35, 50), false));
-            seeds.Add(peashooterSeed = new SeedPacket(peashooterSeedTexture, 1, 100, 7.5f, new Rectangle(298, 10, 35, 50), false));
-            seeds.Add(wallnutSeed = new SeedPacket(wallnutSeedTexture, 2, 50, 30f, new Rectangle(336, 10, 35, 50), false));
-            seeds.Add(potatoMineSeed = new SeedPacket(potatoMineSeedTexture, 3, 25, 30f, new Rectangle(374, 10, 35, 50), true));
-            seeds.Add(cherryBombSeed = new SeedPacket(cherryBombSeedTexture, 4, 150, 50f, new Rectangle(412, 10, 35, 50), true));
-            seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
-            seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
+            seeds.Add(sunflowerSeed = new SeedPacket(sunflowerSeedTexture, sunflowerTexture, 0, 50, 7.5f, new Rectangle(260, 10, 35, 50), false));
+            seeds.Add(peashooterSeed = new SeedPacket(peashooterSeedTexture, peashooterTexture, 1, 100, 7.5f, new Rectangle(298, 10, 35, 50), false));
+            seeds.Add(wallnutSeed = new SeedPacket(wallnutSeedTexture, wallnutTexture, 2, 50, 30f, new Rectangle(336, 10, 35, 50), false));
+            seeds.Add(potatoMineSeed = new SeedPacket(potatoMineSeedTexture, potatoMineTexture, 3, 25, 30f, new Rectangle(374, 10, 35, 50), true));
+            seeds.Add(cherryBombSeed = new SeedPacket(cherryBombSeedTexture, cherryBombTexture, 4, 150, 50f, new Rectangle(412, 10, 35, 50), true));
+            seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, snowPeaTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
+            seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, repeaterTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
+
+            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, shadowHome, 50));
+            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, shadowHome, 100));
+            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, shadowHome, 50));
+            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, shadowHome, 25));
+            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, shadowHome, 150));
+            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, shadowHome, 175));
+            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, shadowHome, 200));
+
 
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
@@ -211,8 +243,20 @@ namespace Final_Project___PVZ_Remake
             //Things That Will Only Be On Screen Somethimes
             gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
             sunTexture = Content.Load<Texture2D>("Images/Sun");
-            //plant textures
 
+            //plant textures
+            sunflowerTexture = Content.Load<Texture2D>("Images/Sunflower");
+            peashooterTexture = Content.Load<Texture2D>("Images/Peashooter");
+            wallnutTexture = Content.Load<Texture2D>("Images/Wallnut");
+            potatoMineTexture = Content.Load<Texture2D>("Images/PotatoMineArmed");
+            potatoMineArmingTexture = Content.Load<Texture2D>("Images/PotatoMineArming");
+            cherryBombTexture = Content.Load<Texture2D>("Images/CherryBomb");
+            snowPeaTexture = Content.Load<Texture2D>("Images/SnowPea");
+            repeaterTexture = Content.Load<Texture2D>("Images/Repeater");
+
+
+
+            //zombie Textures
             browncoatTexture = Content.Load<Texture2D>("Images/Zombie");
             coneheadTexture = Content.Load<Texture2D>("Images/ConeHeadZombie");
             bucketheadTexture = Content.Load<Texture2D>("Images/BucketheadZombie");
@@ -306,9 +350,13 @@ namespace Final_Project___PVZ_Remake
 
                     foreach (SeedPacket seed in seeds)
                     {
-                        seed.Update(gameTime, mouseState, sun);
+                        seed.Update(gameTime, mouseState, sun, shadows);
                     }
 
+                    foreach (PlantShadow shadow in shadows)
+                    {
+                        shadow.Update(mouseState, grid);
+                    }
 
 
                     for (int z = 0; z < zombies.Count; z++)
@@ -451,11 +499,16 @@ namespace Final_Project___PVZ_Remake
                 foreach (Mower mower in mowers)
                 {
                     mower.Draw(_spriteBatch);
-                }            
+                }
 
                 foreach (SeedPacket seed in seeds)
                 {
                     seed.Draw(_spriteBatch);
+                }
+
+                foreach (PlantShadow shadow in shadows)
+                {
+                    shadow.Draw(_spriteBatch);
                 }
 
                 shovelIcon.Draw(_spriteBatch);
@@ -474,7 +527,7 @@ namespace Final_Project___PVZ_Remake
                     _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
                 }
 
-                
+
             }
 
 
