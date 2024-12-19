@@ -20,7 +20,7 @@ namespace Final_Project___PVZ_Remake
             _location = location;
         }
 
-        public void Update(MouseState mousestate)
+        public void Update(MouseState mousestate, Shovel shovel)
         {
 
         }

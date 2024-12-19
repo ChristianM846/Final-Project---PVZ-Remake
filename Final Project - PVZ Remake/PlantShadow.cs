@@ -15,8 +15,9 @@ namespace Final_Project___PVZ_Remake
         private Rectangle _shadowLocation;
         private Rectangle _shadowHomeLocation;
         private int _sunCost;
+        private int _deductSun;
         private bool _dragging;
-        private MouseState prevMouseState;
+
 
         public PlantShadow(Texture2D texture, Rectangle homeLocation, int sunCost)
         {
@@ -24,13 +25,26 @@ namespace Final_Project___PVZ_Remake
             _shadowHomeLocation = homeLocation;
             _shadowLocation = homeLocation;
             _sunCost = sunCost;
+            _deductSun = 0;
         }
 
-        public void Update(MouseState mouseState, List<PlantGrid> grid)
+        public void Update(MouseState mouseState, List<PlantGrid> grid) // add plants here later
         {
+            _deductSun = 0;
+
             if (_shadowLocation.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
             {
                 _dragging = true;
+            }
+
+            foreach (PlantGrid tile in grid)
+            {
+                if (_dragging && mouseState.LeftButton == ButtonState.Released && tile.GridSquare.Contains(mouseState.Position) && !tile.Taken)
+                {
+                    //spawn plant
+                    _deductSun = _sunCost;
+                    tile.Taken = true;
+                }
             }
 
             if (mouseState.LeftButton == ButtonState.Released)
@@ -48,9 +62,6 @@ namespace Final_Project___PVZ_Remake
             {
                 _shadowLocation = _shadowHomeLocation;
             }
-
-
-            prevMouseState = mouseState;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -68,6 +79,11 @@ namespace Final_Project___PVZ_Remake
         {
             get { return _shadowLocation.Y; }
             set { _shadowLocation.Y = value; }
+        }
+
+        public int DeductSun
+        {
+            get { return _deductSun; }
         }
     }
 }

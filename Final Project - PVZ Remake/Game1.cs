@@ -47,6 +47,7 @@ namespace Final_Project___PVZ_Remake
         //Game Stuff (Sometimes Visible)
         Texture2D gridHighlightTexture;
         Texture2D sunTexture;
+        Texture2D shovelTexture;
 
         Rectangle trashSpot;
 
@@ -70,6 +71,7 @@ namespace Final_Project___PVZ_Remake
         // Hidden Game Things
         Rectangle fallingSunRect;
         Rectangle shadowHome;
+        Rectangle shovelHome;
 
         //Sounds and Fonts
         SoundEffect introTheme;
@@ -100,6 +102,7 @@ namespace Final_Project___PVZ_Remake
 
 
         ShovelIcon shovelIcon;
+        Shovel shovel;
         //Seed Packets
         SeedPacket sunflowerSeed;
         SeedPacket peashooterSeed;
@@ -170,7 +173,7 @@ namespace Final_Project___PVZ_Remake
             //Initialize Class object Rectangles
             fallingSunRect = new Rectangle(300, -100, 40, 40);
             shadowHome = new Rectangle(100, -200, 50, 50);
-
+            shovelHome = new Rectangle(200, -200, 70, 70);
 
             base.Initialize();
 
@@ -208,6 +211,7 @@ namespace Final_Project___PVZ_Remake
 
             // Make Other Class Objects here
             shovelIcon = new ShovelIcon(shovelIconTexture, new Rectangle(651, 2, 70, 70));
+            shovel = new Shovel(shovelTexture, shovelHome);
             fallingSun = new FallingSun(sunTexture, fallingSunRect);
             level1Spawner = new ZombieSpawner(level1, browncoatTexture, coneheadTexture, bucketheadTexture, flagZombieTexture);
 
@@ -243,6 +247,7 @@ namespace Final_Project___PVZ_Remake
             //Things That Will Only Be On Screen Somethimes
             gridHighlightTexture = Content.Load<Texture2D>("Images/rectangle");
             sunTexture = Content.Load<Texture2D>("Images/Sun");
+            shovelTexture = Content.Load<Texture2D>("Images/Shovel");
 
             //plant textures
             sunflowerTexture = Content.Load<Texture2D>("Images/Sunflower");
@@ -356,22 +361,27 @@ namespace Final_Project___PVZ_Remake
                     foreach (PlantShadow shadow in shadows)
                     {
                         shadow.Update(mouseState, grid);
+                        sun -= shadow.DeductSun;
                     }
 
 
-                    for (int z = 0; z < zombies.Count; z++)
+                    if (levelTime >= 20)
                     {
-                        zombies[z].Update(gameTime, mowers);
-
-                        if (zombies[z].Health <= 0)
+                        for (int z = 0; z < zombies.Count; z++)
                         {
-                            level1Spawner.PointCount += zombies[z].Points;
-                            zombies[z].ZombieRect = trashSpot;
-                            zombies.RemoveAt(z);
-                            z--;
-                        }
+                            zombies[z].Update(gameTime, mowers);
 
+                            if (zombies[z].Health <= 0)
+                            {
+                                level1Spawner.PointCount += zombies[z].Points;
+                                zombies[z].ZombieRect = trashSpot;
+                                zombies.RemoveAt(z);
+                                z--;
+                            }
+
+                        }
                     }
+                    
 
                     level1Spawner.Update(zombies);
 
