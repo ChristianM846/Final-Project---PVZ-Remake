@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -14,16 +15,18 @@ namespace Final_Project___PVZ_Remake
         private Texture2D _shadowTexture;
         private Rectangle _shadowLocation;
         private Rectangle _shadowHomeLocation;
+        private SoundEffect _plantingTheme;
         private int _sunCost;
         private int _deductSun;
         private bool _dragging;
 
 
-        public PlantShadow(Texture2D texture, Rectangle homeLocation, int sunCost)
+        public PlantShadow(Texture2D texture, Rectangle homeLocation, SoundEffect planting,  int sunCost)
         {
             _shadowTexture = texture;
             _shadowHomeLocation = homeLocation;
             _shadowLocation = homeLocation;
+            _plantingTheme = planting;
             _sunCost = sunCost;
             _deductSun = 0;
         }
@@ -43,6 +46,7 @@ namespace Final_Project___PVZ_Remake
                 {
                     //spawn plant
                     _deductSun = _sunCost;
+                    _plantingTheme.Play();
                     tile.Taken = true;
                 }
             }

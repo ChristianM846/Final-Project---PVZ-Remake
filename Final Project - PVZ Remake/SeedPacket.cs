@@ -67,10 +67,7 @@ namespace Final_Project___PVZ_Remake
                     shadows[_plant].ShadowRectY = mouseState.Position.Y - 25;
                 }
 
-
-
                 _prevMouseState = mouseState;
-
             }
         }
 

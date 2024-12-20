@@ -82,6 +82,7 @@ namespace Final_Project___PVZ_Remake
         SoundEffectInstance loonboonThemeInstance;
         SoundEffect sunPickup;
         SoundEffect gameOverTheme;
+        SoundEffect plantingTheme;
 
 
         SpriteFont titleFont;
@@ -200,13 +201,13 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, snowPeaTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, repeaterTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
 
-            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, shadowHome, 50));
-            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, shadowHome, 100));
-            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, shadowHome, 50));
-            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, shadowHome, 25));
-            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, shadowHome, 150));
-            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, shadowHome, 175));
-            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, shadowHome, 200));
+            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, shadowHome, plantingTheme, 50));
+            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, shadowHome, plantingTheme, 100));
+            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, shadowHome, plantingTheme, 50));
+            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, shadowHome, plantingTheme, 25));
+            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, shadowHome, plantingTheme, 150));
+            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, shadowHome, plantingTheme, 175));
+            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, shadowHome, plantingTheme, 200));
 
 
             // Make Other Class Objects here
@@ -259,8 +260,6 @@ namespace Final_Project___PVZ_Remake
             snowPeaTexture = Content.Load<Texture2D>("Images/SnowPea");
             repeaterTexture = Content.Load<Texture2D>("Images/Repeater");
 
-
-
             //zombie Textures
             browncoatTexture = Content.Load<Texture2D>("Images/Zombie");
             coneheadTexture = Content.Load<Texture2D>("Images/ConeHeadZombie");
@@ -276,6 +275,7 @@ namespace Final_Project___PVZ_Remake
             loonboonThemeInstance = loonboonTheme.CreateInstance();
             sunPickup = Content.Load<SoundEffect>("Sounds/SunPickup");
             gameOverTheme = Content.Load<SoundEffect>("Sounds/LoseMusic");
+            plantingTheme = Content.Load<SoundEffect>("Sounds/PlantingEffect");
         }
 
         protected override void Update(GameTime gameTime)
@@ -364,6 +364,11 @@ namespace Final_Project___PVZ_Remake
                         sun -= shadow.DeductSun;
                     }
 
+                    shovelIcon.Update(mouseState, shovel);
+                    shovel.Update(mouseState, grid);
+
+
+                    // update plants
 
                     if (levelTime >= 20)
                     {
@@ -523,6 +528,9 @@ namespace Final_Project___PVZ_Remake
 
                 shovelIcon.Draw(_spriteBatch);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+
+                shovel.Draw(_spriteBatch);
+
 
                 if (levelTime < 1)
                 {

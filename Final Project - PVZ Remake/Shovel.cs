@@ -46,8 +46,8 @@ namespace Final_Project___PVZ_Remake
 
             if (_dragging)
             {
-                _shovelLocation.X = mouseState.X - 25;
-                _shovelLocation.Y = mouseState.Y - 25;
+                _shovelLocation.X = mouseState.X - 35;
+                _shovelLocation.Y = mouseState.Y - 35;
             }
 
             if (_dragging == false)
@@ -61,7 +61,17 @@ namespace Final_Project___PVZ_Remake
             spriteBatch.Draw(_shovelTexture, _shovelLocation, Color.White);
         }
 
+        public int ShovelRectX
+        {
+            get { return _shovelLocation.X; }
+            set { _shovelLocation.X = value; }
+        }
 
+        public int ShovelRectY
+        {
+            get { return _shovelLocation.Y; }
+            set { _shovelLocation.Y = value; }
+        }
 
     }
 }
