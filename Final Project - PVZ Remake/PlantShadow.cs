@@ -18,10 +18,11 @@ namespace Final_Project___PVZ_Remake
         private SoundEffect _plantingTheme;
         private int _sunCost;
         private int _deductSun;
+        private int _plant;
         private bool _dragging;
 
 
-        public PlantShadow(Texture2D texture, Rectangle homeLocation, SoundEffect planting,  int sunCost)
+        public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting,  int sunCost)
         {
             _shadowTexture = texture;
             _shadowHomeLocation = homeLocation;

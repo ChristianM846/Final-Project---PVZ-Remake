@@ -13,7 +13,6 @@ namespace Final_Project___PVZ_Remake
     public class SeedPacket
     {
         private Texture2D _packetTexture;
-        private Texture2D _associatedPlantTexture;
         private Rectangle _location;
         private int _plant;
         private int _sunCost;
@@ -28,7 +27,6 @@ namespace Final_Project___PVZ_Remake
         public SeedPacket (Texture2D texture, Texture2D plantTexture, int plant, int cost, float cooldown, Rectangle location, bool locked)
         {
             _packetTexture = texture;
-            _associatedPlantTexture = plantTexture;
             _location = location;
             _plant = plant;
             _sunCost = cost;

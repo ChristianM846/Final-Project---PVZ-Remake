@@ -201,13 +201,13 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, snowPeaTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, repeaterTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
 
-            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, shadowHome, plantingTheme, 50));
-            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, shadowHome, plantingTheme, 100));
-            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, shadowHome, plantingTheme, 50));
-            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, shadowHome, plantingTheme, 25));
-            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, shadowHome, plantingTheme, 150));
-            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, shadowHome, plantingTheme, 175));
-            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, shadowHome, plantingTheme, 200));
+            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, 0, shadowHome, plantingTheme, 50));
+            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, 1, shadowHome, plantingTheme, 100));
+            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, 2,shadowHome, plantingTheme, 50));
+            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, 3, shadowHome, plantingTheme, 25));
+            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, 4, shadowHome, plantingTheme, 150));
+            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, 5, shadowHome, plantingTheme, 175));
+            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, 6, shadowHome, plantingTheme, 200));
 
 
             // Make Other Class Objects here
