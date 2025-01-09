@@ -14,16 +14,25 @@ namespace Final_Project___PVZ_Remake
         private float _timeStamp;
         private float _shootTimer;
 
-        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type)
+        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type, float timeStamp)
         {
             _plantTexture = texture;
             _plantLocation = location;
             _plantHealth = health;
             _shooterType = type;
+            _timeStamp = timeStamp;
         }
 
         public override void Update(GameTime gameTime)
         {
+            _shootTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 3);
+
+            if (_shootTimer == 1.42f)
+            {
+                //make a pea
+                _shootTimer = 0f;
+                _timeStamp = (float) gameTime.TotalGameTime.TotalSeconds;
+            }
 
         }
 

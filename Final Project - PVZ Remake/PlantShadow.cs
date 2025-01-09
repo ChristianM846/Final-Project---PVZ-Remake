@@ -52,7 +52,7 @@ namespace Final_Project___PVZ_Remake
                     }
                     else if (_plant == 1)
                     {
-                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1));
+                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1, (float)gameTime.TotalGameTime.TotalSeconds));
                     }
                     else if (_plant == 2)
                     {
