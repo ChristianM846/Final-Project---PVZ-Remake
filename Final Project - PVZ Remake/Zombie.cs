@@ -56,7 +56,7 @@ namespace Final_Project___PVZ_Remake
 
         }
 
-        public void Update(GameTime gameTime, List<Mower> mowers)
+        public void Update(GameTime gameTime, List<Mower> mowers, List<Plant> plants)
         {
             _moveCounter += 1;
 

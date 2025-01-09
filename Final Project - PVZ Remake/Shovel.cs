@@ -23,7 +23,7 @@ namespace Final_Project___PVZ_Remake
             _shovelHomeLocation = location;
         }
 
-        public void Update(MouseState mouseState, List<PlantGrid> grid) // add plants in here later
+        public void Update(MouseState mouseState, List<PlantGrid> grid, List<Plant> plants)
         {
             if (_shovelLocation.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed)
             {
@@ -34,10 +34,18 @@ namespace Final_Project___PVZ_Remake
             {
                 if (_dragging && mouseState.LeftButton == ButtonState.Released && tile.GridSquare.Contains(mouseState.Position) && tile.Taken)
                 {
-                    //remove plant (by reducing health to 0)
                     tile.Taken = false;
                 }
             }
+
+            foreach (Plant plant in plants)
+            {
+                if (_dragging && mouseState.LeftButton == ButtonState.Released && plant.PlantLocation.Contains(mouseState.Position))
+                {
+                    plant.PlantHealth = 0;
+                }
+            }
+
 
             if (mouseState.LeftButton == ButtonState.Released)
             {

@@ -99,6 +99,7 @@ namespace Final_Project___PVZ_Remake
         List<Mower> mowers;
         List<SeedPacket> seeds;
         List<PlantShadow> shadows;
+        List<Plant> plants;
         List<Zombie> zombies;
 
 
@@ -169,6 +170,7 @@ namespace Final_Project___PVZ_Remake
             mowers = new List<Mower>();
             seeds = new List<SeedPacket>();
             shadows = new List<PlantShadow>();
+            plants = new List<Plant>();
             zombies = new List<Zombie>();
 
             //Initialize Class object Rectangles
@@ -360,21 +362,32 @@ namespace Final_Project___PVZ_Remake
 
                     foreach (PlantShadow shadow in shadows)
                     {
-                        shadow.Update(mouseState, grid);
+                        shadow.Update(mouseState, gameTime, grid, seeds, plants);
                         sun -= shadow.DeductSun;
                     }
 
                     shovelIcon.Update(mouseState, shovel);
-                    shovel.Update(mouseState, grid);
+                    shovel.Update(mouseState, grid, plants);
 
 
-                    // update plants
+                    for (int p = 0; p < plants.Count; p++)
+                    {
+                        plants[p].Update(gameTime);
+
+                        if (plants[p].PlantHealth <= 0)
+                        {
+                            plants[p].PlantLocation = trashSpot;
+                            plants.RemoveAt(p);
+                            p--;
+                        }
+
+                    }
 
                     if (levelTime >= 20)
                     {
                         for (int z = 0; z < zombies.Count; z++)
                         {
-                            zombies[z].Update(gameTime, mowers);
+                            zombies[z].Update(gameTime, mowers, plants);
 
                             if (zombies[z].Health <= 0)
                             {
@@ -504,7 +517,10 @@ namespace Final_Project___PVZ_Remake
                     square.Draw(_spriteBatch);
                 }
 
-                //plants
+                foreach (Plant plant in plants)
+                {
+                    plant.Draw(_spriteBatch);
+                }
 
                 foreach (Zombie zombie in zombies)
                 {

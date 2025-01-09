@@ -26,13 +26,14 @@ namespace Final_Project___PVZ_Remake
         {
             _shadowTexture = texture;
             _shadowHomeLocation = homeLocation;
+            _plant = plant;
             _shadowLocation = homeLocation;
             _plantingTheme = planting;
             _sunCost = sunCost;
             _deductSun = 0;
         }
 
-        public void Update(MouseState mouseState, List<PlantGrid> grid) // add plants here later
+        public void Update(MouseState mouseState, GameTime gameTime, List<PlantGrid> grid, List<SeedPacket> seeds, List<Plant> plants)
         {
             _deductSun = 0;
 
@@ -45,9 +46,23 @@ namespace Final_Project___PVZ_Remake
             {
                 if (_dragging && mouseState.LeftButton == ButtonState.Released && tile.GridSquare.Contains(mouseState.Position) && !tile.Taken)
                 {
-                    //spawn plant
+                    if (_plant == 0)
+                    {
+                        //make sunflower
+                    }
+                    else if (_plant == 1)
+                    {
+                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1));
+                    }
+                    else if (_plant == 2)
+                    {
+                        // make wallnut
+                    }
+
+
                     _deductSun = _sunCost;
                     _plantingTheme.Play();
+                    seeds[_plant].TimeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
                     tile.Taken = true;
                 }
             }
