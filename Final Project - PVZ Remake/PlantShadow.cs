@@ -48,7 +48,7 @@ namespace Final_Project___PVZ_Remake
                 {
                     if (_plant == 0)
                     {
-                        //make sunflower
+                        plants.Add(new SunProducer(_shadowTexture, tile.GridSquare, 300, (float)gameTime.TotalGameTime.TotalSeconds));
                     }
                     else if (_plant == 1)
                     {
@@ -56,7 +56,7 @@ namespace Final_Project___PVZ_Remake
                     }
                     else if (_plant == 2)
                     {
-                        // make wallnut
+                        plants.Add(new WallPlant(_shadowTexture, tile.GridSquare, 4000));
                     }
 
 

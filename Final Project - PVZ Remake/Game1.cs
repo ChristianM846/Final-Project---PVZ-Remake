@@ -83,6 +83,8 @@ namespace Final_Project___PVZ_Remake
         SoundEffect sunPickup;
         SoundEffect gameOverTheme;
         SoundEffect plantingTheme;
+        SoundEffect eatingTheme;
+        SoundEffectInstance eatingThemeInstance;
 
 
         SpriteFont titleFont;
@@ -278,6 +280,8 @@ namespace Final_Project___PVZ_Remake
             sunPickup = Content.Load<SoundEffect>("Sounds/SunPickup");
             gameOverTheme = Content.Load<SoundEffect>("Sounds/LoseMusic");
             plantingTheme = Content.Load<SoundEffect>("Sounds/PlantingEffect");
+            eatingTheme = Content.Load<SoundEffect>("Sounds/EatingEffect");
+            eatingThemeInstance = eatingTheme.CreateInstance();
         }
 
         protected override void Update(GameTime gameTime)
@@ -395,6 +399,19 @@ namespace Final_Project___PVZ_Remake
                                 zombies[z].ZombieRect = trashSpot;
                                 zombies.RemoveAt(z);
                                 z--;
+                            }
+
+                            for (int p = 0; p < plants.Count; p++)
+                            {
+                                if (!zombies[z].ZombieRect.Intersects(plants[p].PlantLocation) && eatingThemeInstance.State == SoundState.Playing)
+                                {
+                                    eatingThemeInstance.Stop();
+                                }
+
+                                if (zombies[z].ZombieRect.Intersects(plants[p].PlantLocation))
+                                {
+                                    eatingThemeInstance.Play();
+                                }
                             }
 
                         }

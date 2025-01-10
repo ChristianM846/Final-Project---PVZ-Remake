@@ -17,6 +17,7 @@ namespace Final_Project___PVZ_Remake
         private int _health;
         private int _pointValue;
         private int _zombieType;
+        private bool _dmgSwitch;
 
         public Zombie(Texture2D zombieTexture, Rectangle location, int zombieType)
         {
@@ -53,7 +54,7 @@ namespace Final_Project___PVZ_Remake
                 _pointValue = 0;
             }
 
-
+            _dmgSwitch = false;
         }
 
         public void Update(GameTime gameTime, List<Mower> mowers, List<Plant> plants)
@@ -64,6 +65,25 @@ namespace Final_Project___PVZ_Remake
             {
                 _location.Offset(-1, 0);
                 _moveCounter = 0;
+            }
+
+            foreach (Plant plant in plants)
+            {
+                if (_location.Intersects(plant.PlantLocation))
+                {
+                    _moveCounter = 0;
+
+                    if(_dmgSwitch)
+                    {
+                        plant.PlantHealth -= 1;
+                        _dmgSwitch = false;
+                    }
+                    else if (!_dmgSwitch)
+                    {
+                        plant.PlantHealth -= 2;
+                        _dmgSwitch = true;
+                    }
+                }
             }
 
             for (int m = 0; m < mowers.Count; m++)

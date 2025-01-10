@@ -15,7 +15,7 @@ namespace Final_Project___PVZ_Remake
         private int _wave;
         private int _pointCounter;
         private int _wavepoints;
-        private int _winPointGoal;
+        //private int _winPointGoal;
         private int _spawnLane;
         private int _spawnHeight;
         private int _spawnChoice;
@@ -33,10 +33,10 @@ namespace Final_Project___PVZ_Remake
             _pointCounter = 0;
             _wavepoints = 0;
 
-            foreach (int value in _spawnList)
-            {
-                _winPointGoal += value;
-            }
+            //foreach (int value in _spawnList)
+            //{
+            //    _winPointGoal += value;
+            //}
         }
 
         public void Update(List<Zombie> zombies)
@@ -83,7 +83,7 @@ namespace Final_Project___PVZ_Remake
                     _spawnChoice = _generator.Next(1, 11);
 
                     if (_spawnChoice >= 1 && _spawnChoice <= 5 && _pointCounter >= 1)
-                    {
+                    {   
                         zombies.Add(new Zombie(_browncoatTexture, new Rectangle(800 + (_zombiesSpawned * 40), _spawnHeight, 50, 80), 1));
                         _zombiesSpawned++;
                         _pointCounter -= 1;
