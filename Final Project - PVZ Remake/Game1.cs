@@ -99,6 +99,7 @@ namespace Final_Project___PVZ_Remake
         // Class Objects
         List<PlantGrid> grid;
         List<Mower> mowers;
+        List<SunNode> sunNodes;
         List<SeedPacket> seeds;
         List<PlantShadow> shadows;
         List<Plant> plants;
@@ -170,6 +171,7 @@ namespace Final_Project___PVZ_Remake
             // Initialize Class Lists
             grid = new List<PlantGrid>();
             mowers = new List<Mower>();
+            sunNodes = new List<SunNode>();
             seeds = new List<SeedPacket>();
             shadows = new List<PlantShadow>();
             plants = new List<Plant>();
@@ -205,13 +207,13 @@ namespace Final_Project___PVZ_Remake
             seeds.Add(snowPeaSeed = new SeedPacket(snowPeaSeedTexture, snowPeaTexture, 5, 175, 7.5f, new Rectangle(450, 10, 35, 50), true));
             seeds.Add(repeaterSeed = new SeedPacket(repeaterSeedTexture, repeaterTexture, 6, 200, 7.5f, new Rectangle(488, 10, 35, 50), true));
 
-            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, 0, shadowHome, plantingTheme, 50));
-            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, 1, shadowHome, plantingTheme, 100));
-            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, 2,shadowHome, plantingTheme, 50));
-            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, 3, shadowHome, plantingTheme, 25));
-            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, 4, shadowHome, plantingTheme, 150));
-            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, 5, shadowHome, plantingTheme, 175));
-            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, 6, shadowHome, plantingTheme, 200));
+            shadows.Add(sunflowerShadow = new PlantShadow(sunflowerTexture, 0, shadowHome, plantingTheme, 50, sunTexture));
+            shadows.Add(peashooterShadow = new PlantShadow(peashooterTexture, 1, shadowHome, plantingTheme, 100, sunTexture));
+            shadows.Add(wallnutShadow = new PlantShadow(wallnutTexture, 2, shadowHome, plantingTheme, 50, sunTexture));
+            shadows.Add(potatoMineShadow = new PlantShadow(potatoMineTexture, 3, shadowHome, plantingTheme, 25, sunTexture));
+            shadows.Add(cherryBombShadow = new PlantShadow(cherryBombTexture, 4, shadowHome, plantingTheme, 150, sunTexture));
+            shadows.Add(snowPeaShadow = new PlantShadow(snowPeaTexture, 5, shadowHome, plantingTheme, 175, sunTexture));
+            shadows.Add(repeaterShadow = new PlantShadow(repeaterTexture, 6, shadowHome, plantingTheme, 200, sunTexture));
 
 
             // Make Other Class Objects here
@@ -348,6 +350,20 @@ namespace Final_Project___PVZ_Remake
                     fallingSun.Update(gameTime, mouseState);
                     sun += fallingSun.SunValue;
 
+                    for (int i = 0; i < sunNodes.Count; i++)
+                    {
+                        sunNodes[i].Update(mouseState);
+                        sun += sunNodes[i].NodeValue;
+
+                        if (sunNodes[i].Collected)
+                        {
+                            sunNodes[i].SunNodeRect = trashSpot;
+                            sunNodes.RemoveAt(i);
+                            i--;
+                        }
+
+                    }
+
                     for (int m = 0; m < mowers.Count; m++)
                     {
                         mowers[m].Update(zombies);
@@ -376,7 +392,7 @@ namespace Final_Project___PVZ_Remake
 
                     for (int p = 0; p < plants.Count; p++)
                     {
-                        plants[p].Update(gameTime);
+                        plants[p].Update(gameTime, sunNodes);
 
                         if (plants[p].PlantHealth <= 0)
                         {
@@ -393,14 +409,6 @@ namespace Final_Project___PVZ_Remake
                         {
                             zombies[z].Update(gameTime, mowers, plants);
 
-                            if (zombies[z].Health <= 0)
-                            {
-                                level1Spawner.PointCount += zombies[z].Points;
-                                zombies[z].ZombieRect = trashSpot;
-                                zombies.RemoveAt(z);
-                                z--;
-                            }
-
                             for (int p = 0; p < plants.Count; p++)
                             {
                                 if (!zombies[z].ZombieRect.Intersects(plants[p].PlantLocation) && eatingThemeInstance.State == SoundState.Playing)
@@ -413,6 +421,16 @@ namespace Final_Project___PVZ_Remake
                                     eatingThemeInstance.Play();
                                 }
                             }
+
+                            if (zombies[z].Health <= 0)
+                            {
+                                level1Spawner.PointCount += zombies[z].Points;
+                                zombies[z].ZombieRect = trashSpot;
+                                zombies.RemoveAt(z);
+                                z--;
+                            }
+
+                            
 
                         }
                     }
@@ -561,6 +579,11 @@ namespace Final_Project___PVZ_Remake
 
                 shovelIcon.Draw(_spriteBatch);
                 _spriteBatch.DrawString(sunFont, $"{sun}", sunBankLocation, Color.Black);
+
+                foreach (SunNode node in sunNodes)
+                {
+                    node.Draw(_spriteBatch);
+                }
 
                 shovel.Draw(_spriteBatch);
 

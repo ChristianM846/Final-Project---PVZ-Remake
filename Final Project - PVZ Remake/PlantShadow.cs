@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Final_Project___PVZ_Remake
 {
@@ -20,9 +16,10 @@ namespace Final_Project___PVZ_Remake
         private int _deductSun;
         private int _plant;
         private bool _dragging;
+        private Texture2D _sunNodeTexture;
 
 
-        public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting,  int sunCost)
+        public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting, int sunCost, Texture2D nodeTexture)
         {
             _shadowTexture = texture;
             _shadowHomeLocation = homeLocation;
@@ -31,6 +28,7 @@ namespace Final_Project___PVZ_Remake
             _plantingTheme = planting;
             _sunCost = sunCost;
             _deductSun = 0;
+            _sunNodeTexture = nodeTexture;
         }
 
         public void Update(MouseState mouseState, GameTime gameTime, List<PlantGrid> grid, List<SeedPacket> seeds, List<Plant> plants)
@@ -48,7 +46,7 @@ namespace Final_Project___PVZ_Remake
                 {
                     if (_plant == 0)
                     {
-                        plants.Add(new SunProducer(_shadowTexture, tile.GridSquare, 300, (float)gameTime.TotalGameTime.TotalSeconds));
+                        plants.Add(new SunProducer(_shadowTexture, tile.GridSquare, 300, (float)gameTime.TotalGameTime.TotalSeconds, _sunNodeTexture));
                     }
                     else if (_plant == 1)
                     {

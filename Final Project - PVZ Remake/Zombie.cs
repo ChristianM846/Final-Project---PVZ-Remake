@@ -104,6 +104,7 @@ namespace Final_Project___PVZ_Remake
         public int Health 
         {
             get { return _health; }
+            set { _health = value; }
         }
 
         public int Points

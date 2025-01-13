@@ -18,7 +18,7 @@ namespace Final_Project___PVZ_Remake
             _plantHealth = health;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<SunNode> nodes) //Nodes and projectiles not used here
         {
 
         }

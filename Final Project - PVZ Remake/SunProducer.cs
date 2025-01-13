@@ -12,25 +12,26 @@ namespace Final_Project___PVZ_Remake
     {
         private float _timeStamp;
         private float _sunTimer;
+        private Texture2D _nodeTexture;
 
-        public SunProducer(Texture2D texture, Rectangle location, int health, float timeStamp)
+        public SunProducer(Texture2D texture, Rectangle location, int health, float timeStamp, Texture2D nodeTexture)
         {
             _plantTexture = texture;
             _plantLocation = location;
             _plantHealth = health;
             _timeStamp = timeStamp;
+            _nodeTexture = nodeTexture;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<SunNode> nodes) //projectiles not used here
         {
             _sunTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 2);
 
             if (_sunTimer == 24.25)
             {
-                // make sun node
+                nodes.Add(new SunNode(_nodeTexture, new Rectangle((_plantLocation.X + 50), _plantLocation.Y, 40, 40)));
                 _timeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -42,7 +43,6 @@ namespace Final_Project___PVZ_Remake
         {
             get { return _plantLocation; }
             set { _plantLocation = value; }
-
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Final_Project___PVZ_Remake
             _timeStamp = timeStamp;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, List<SunNode> nodes) //Nodes not used here
         {
             _shootTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 2);
 
