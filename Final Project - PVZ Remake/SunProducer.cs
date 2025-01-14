@@ -23,7 +23,7 @@ namespace Final_Project___PVZ_Remake
             _nodeTexture = nodeTexture;
         }
 
-        public override void Update(GameTime gameTime, List<SunNode> nodes) //projectiles not used here
+        public override void Update(GameTime gameTime, List<SunNode> nodes, List<Projectiles> projectiles) //projectiles not used here
         {
             _sunTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 2);
 

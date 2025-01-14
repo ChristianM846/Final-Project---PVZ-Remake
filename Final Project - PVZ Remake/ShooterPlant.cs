@@ -13,26 +13,30 @@ namespace Final_Project___PVZ_Remake
         private int _shooterType;
         private float _timeStamp;
         private float _shootTimer;
+        private Texture2D _peaTexture;
 
-        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type, float timeStamp)
+        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type, float timeStamp, Texture2D peaTexture)
         {
             _plantTexture = texture;
             _plantLocation = location;
             _plantHealth = health;
             _shooterType = type;
             _timeStamp = timeStamp;
+            _peaTexture = peaTexture;
         }
 
-        public override void Update(GameTime gameTime, List<SunNode> nodes) //Nodes not used here
+        public override void Update(GameTime gameTime, List<SunNode> nodes, List<Projectiles> projectiles) //Nodes not used here
         {
             _shootTimer = (float)Math.Round(gameTime.TotalGameTime.TotalSeconds - _timeStamp, 2);
 
-            if (_shootTimer == 1.42f)
+            if (_shooterType == 1)
             {
-                //make a pea
-                _timeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
+                if (_shootTimer == 1.42f)
+                {
+                    projectiles.Add(new Projectiles(_peaTexture, new Rectangle(_plantLocation.X + 50, _plantLocation.Y + 10, 15, 15), _shooterType));
+                    _timeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
+                }
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

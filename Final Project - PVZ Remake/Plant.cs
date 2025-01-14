@@ -32,7 +32,7 @@ namespace Final_Project___PVZ_Remake
             set { _plantHealth = value; }
         }
 
-        public abstract void Update(GameTime gameTime, List<SunNode> nodes);
+        public abstract void Update(GameTime gameTime, List<SunNode> nodes, List<Projectiles> projectiles);
 
         public abstract void Draw(SpriteBatch spriteBatch);
 

@@ -17,9 +17,10 @@ namespace Final_Project___PVZ_Remake
         private int _plant;
         private bool _dragging;
         private Texture2D _sunNodeTexture;
+        private Texture2D _peaTexture;
 
 
-        public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting, int sunCost, Texture2D nodeTexture)
+        public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting, int sunCost, Texture2D nodeTexture, Texture2D peaTexture)
         {
             _shadowTexture = texture;
             _shadowHomeLocation = homeLocation;
@@ -29,6 +30,7 @@ namespace Final_Project___PVZ_Remake
             _sunCost = sunCost;
             _deductSun = 0;
             _sunNodeTexture = nodeTexture;
+            _peaTexture = peaTexture;
         }
 
         public void Update(MouseState mouseState, GameTime gameTime, List<PlantGrid> grid, List<SeedPacket> seeds, List<Plant> plants)
@@ -50,7 +52,7 @@ namespace Final_Project___PVZ_Remake
                     }
                     else if (_plant == 1)
                     {
-                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1, (float)gameTime.TotalGameTime.TotalSeconds));
+                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1, (float)gameTime.TotalGameTime.TotalSeconds, _peaTexture));
                     }
                     else if (_plant == 2)
                     {

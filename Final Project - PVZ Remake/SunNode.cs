@@ -58,7 +58,5 @@ namespace Final_Project___PVZ_Remake
             get { return _location; }
             set { _location = value; }
         }
-
-
     }
 }

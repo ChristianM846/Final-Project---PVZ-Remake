@@ -18,6 +18,8 @@ namespace Final_Project___PVZ_Remake
         private int _pointValue;
         private int _zombieType;
         private bool _dmgSwitch;
+        private bool _slowed;
+        bool _prevSlowed;
 
         public Zombie(Texture2D zombieTexture, Rectangle location, int zombieType)
         {
@@ -55,11 +57,22 @@ namespace Final_Project___PVZ_Remake
             }
 
             _dmgSwitch = false;
+            _slowed = false;
         }
 
         public void Update(GameTime gameTime, List<Mower> mowers, List<Plant> plants)
         {
             _moveCounter += 1;
+
+            if (_slowed && !_prevSlowed)
+            {
+                _moveCountSpeed *= 2;
+            }
+
+            if (!_slowed && _prevSlowed)
+            {
+                _moveCountSpeed /= 2;
+            }
 
             if (_moveCounter == _moveCountSpeed)
             {
@@ -94,6 +107,8 @@ namespace Final_Project___PVZ_Remake
                     mowers[m].MowerSpeed = new Vector2(2, 0);
                 }
             }
+
+            _prevSlowed = _slowed;
         }
 
         public void Draw(SpriteBatch spriteBatch)
