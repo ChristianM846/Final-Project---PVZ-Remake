@@ -16,12 +16,14 @@ namespace Final_Project___PVZ_Remake
         private int _type;
         private int _dmgValue;
         private bool _slow;
+        private bool _hit;
 
         public Projectiles(Texture2D texture, Rectangle location, int type)
         {
             _projectileTexture = texture;
             _location = location;
             _type = type;
+            _hit = false;
 
             if (_type == 1)
             {
@@ -32,9 +34,23 @@ namespace Final_Project___PVZ_Remake
             // add more for other projectiles later
         }
 
-        public void Update (GameTime gametime)
+        public void Update (GameTime gametime, List<Zombie> zombies, Rectangle window)
         {
             _location.Offset(_speedX);
+
+            if (!_location.Intersects(window))
+            {
+                _hit = true;
+            }
+
+            for (int z = 0; z < zombies.Count; z++)
+            {
+                if (_location.Intersects(zombies[z].ZombieRect))
+                {
+                    _hit = true;
+                    zombies[z].Health -= _dmgValue;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -48,20 +64,9 @@ namespace Final_Project___PVZ_Remake
             set { _location = value; }
         }
 
-        public int Damage
+        public bool Hit
         {
-            get { return _dmgValue; }
-        }
-
-        public Vector2 Speed
-        {
-            get { return _speedX; }
-            set { _speedX = value; }
-        }
-
-        public bool Slowing
-        {
-            get { return _slow; }
+            get { return _hit; }
         }
     }
 }

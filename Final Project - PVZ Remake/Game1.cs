@@ -430,32 +430,20 @@ namespace Final_Project___PVZ_Remake
                         }
                     }
 
+                    level1Spawner.Update(zombies);
+
                     for (int i = 0; i < projectiles.Count; i++)
                     {
-                        projectiles[i].Update(gameTime);
+                        projectiles[i].Update(gameTime, zombies, window);
 
-                        if (!projectiles[i].ProjectileLocation.Intersects(window))
+                        if (projectiles[i].Hit)
                         {
                             projectiles[i].ProjectileLocation = trashSpot;
                             projectiles.RemoveAt(i);
                             i--;
                         }
 
-                        for (int z = 0; z < zombies.Count; z++)
-                        {
-                            if (projectiles[i].ProjectileLocation.Intersects(zombies[z].ZombieRect))
-                            {
-                                zombies[z].Health -= projectiles[i].Damage;
-                                projectiles[i].ProjectileLocation = trashSpot;
-                                projectiles.RemoveAt(i);
-                                i--;
-                            }
-                        }
-
                     }
-                    // work here
-
-                    level1Spawner.Update(zombies);
 
                     if (level1Spawner.Wave == 21)
                     {
@@ -469,6 +457,7 @@ namespace Final_Project___PVZ_Remake
                             screen = Screen.GameOver;
                             grasswalkThemeInstance.Stop();
                             loonboonThemeInstance.Stop();
+                            eatingThemeInstance.Stop();
                             gameOverTheme.Play();
                         }
                     }
