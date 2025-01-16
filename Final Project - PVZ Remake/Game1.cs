@@ -27,6 +27,15 @@ namespace Final_Project___PVZ_Remake
         Texture2D titleScreenTexture;
         Rectangle window;
 
+        //Win Screen Stuff
+        Texture2D winScreenTexture; //Also the between screen
+
+        //Lose Screen Stuff
+        Texture2D loseScreenTexture;
+
+        //Between Screen Stuff
+        Texture2D betweenScreenTexture;
+
         //Game Stuff (Always visible)
         Texture2D frontYardTexture;
         Texture2D plantRosterTexture;
@@ -83,6 +92,7 @@ namespace Final_Project___PVZ_Remake
         SoundEffectInstance loonboonThemeInstance;
         SoundEffect sunPickup;
         SoundEffect gameOverTheme;
+        SoundEffect winTheme;
         SoundEffect plantingTheme;
         SoundEffect eatingTheme;
         SoundEffectInstance eatingThemeInstance;
@@ -238,6 +248,16 @@ namespace Final_Project___PVZ_Remake
             //Intro Screen
             introFont = Content.Load<SpriteFont>("Fonts/IntroFont");
 
+            //Win Screen
+            winScreenTexture = Content.Load<Texture2D>("Images/LevelComplete"); //Is also the between screen
+
+            //Lose Screen
+            loseScreenTexture = Content.Load<Texture2D>("Images/GameOver");
+
+            //Between Screen
+            betweenScreenTexture = winScreenTexture;
+
+
             //Game
             //Base Things That Will Always Be There
             frontYardTexture = Content.Load<Texture2D>("Images/FrontYard");
@@ -285,6 +305,7 @@ namespace Final_Project___PVZ_Remake
             loonboonThemeInstance = loonboonTheme.CreateInstance();
             sunPickup = Content.Load<SoundEffect>("Sounds/SunPickup");
             gameOverTheme = Content.Load<SoundEffect>("Sounds/LoseMusic");
+            winTheme = Content.Load<SoundEffect>("Sounds/VictoryMusic");
             plantingTheme = Content.Load<SoundEffect>("Sounds/PlantingEffect");
             eatingTheme = Content.Load<SoundEffect>("Sounds/EatingEffect");
             eatingThemeInstance = eatingTheme.CreateInstance();
@@ -361,11 +382,11 @@ namespace Final_Project___PVZ_Remake
 
                         if (sunNodes[i].Collected)
                         {
+                            sunPickup.Play();
                             sunNodes[i].SunNodeRect = trashSpot;
                             sunNodes.RemoveAt(i);
                             i--;
                         }
-
                     }
 
                     for (int m = 0; m < mowers.Count; m++)
@@ -401,6 +422,7 @@ namespace Final_Project___PVZ_Remake
                         if (plants[p].PlantHealth <= 0)
                         {
                             plants[p].PlantLocation = trashSpot;
+                            grid[plants[p].GridSpace].Taken = false;
                             plants.RemoveAt(p);
                             p--;
                         }
@@ -448,10 +470,22 @@ namespace Final_Project___PVZ_Remake
                     if (level1Spawner.Wave == 21)
                     {
                         screen = Screen.Thanks;
+                        grasswalkThemeInstance.Stop();
+                        loonboonThemeInstance.Stop();
+                        eatingThemeInstance.Stop();
+                        winTheme.Play();
+                    }
+
+                    for (int z = 0; z < zombies.Count; z++)
+                    {
+                        if (zombies[z].ZombieRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                        {
+                            zombies[z].Health = 0;
+                        }
                     }
 
                     foreach (Zombie zombie in zombies)
-                    {
+                    {                 
                         if (zombie.ZombieRect.X == 150)
                         {
                             screen = Screen.GameOver;
@@ -464,7 +498,6 @@ namespace Final_Project___PVZ_Remake
 
                 }
             }
-
 
             if (sun == 0)
             {
@@ -517,7 +550,7 @@ namespace Final_Project___PVZ_Remake
                 _spriteBatch.DrawString(titleFont, "continue", new Vector2(370, 310), Color.Black);
                 _spriteBatch.DrawString(introFont, "Spend your sun to plant plants to defend your house", new Vector2(200, 90), Color.Black);
                 _spriteBatch.DrawString(introFont, "Sunflowers produce sun, Wallnuts tank damage,", new Vector2(200, 110), Color.Black);
-                _spriteBatch.DrawString(introFont, "and all the other deal damage", new Vector2(200, 130), Color.Black);
+                _spriteBatch.DrawString(introFont, "and all the others deal damage", new Vector2(200, 130), Color.Black);
                 _spriteBatch.DrawString(introFont, "Zombies will come from the right side of the lawn", new Vector2(250, 450), Color.Black);
                 _spriteBatch.DrawString(introFont, "Defeat them!", new Vector2(410, 470), Color.Black);
                 _spriteBatch.DrawString(introFont, "Use the", new Vector2(725, 10), Color.Black);
@@ -615,6 +648,10 @@ namespace Final_Project___PVZ_Remake
                 }
 
 
+            }
+            else if (screen == Screen.GameOver)
+            {
+                _spriteBatch.Draw(loseScreenTexture, window, Color.White);
             }
 
 

@@ -502,3 +502,9 @@
 /processorParam:Quality=Best
 /build:Sounds/SunPickup.wav
 
+#begin Sounds/VictoryMusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/VictoryMusic.wav
+

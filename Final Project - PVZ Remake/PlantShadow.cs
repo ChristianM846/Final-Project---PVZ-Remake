@@ -19,7 +19,6 @@ namespace Final_Project___PVZ_Remake
         private Texture2D _sunNodeTexture;
         private Texture2D _peaTexture;
 
-
         public PlantShadow(Texture2D texture, int plant, Rectangle homeLocation, SoundEffect planting, int sunCost, Texture2D nodeTexture, Texture2D peaTexture)
         {
             _shadowTexture = texture;
@@ -42,28 +41,27 @@ namespace Final_Project___PVZ_Remake
                 _dragging = true;
             }
 
-            foreach (PlantGrid tile in grid)
+            for (int g = 0; g < grid.Count; g++)
             {
-                if (_dragging && mouseState.LeftButton == ButtonState.Released && tile.GridSquare.Contains(mouseState.Position) && !tile.Taken)
+                if (_dragging && mouseState.LeftButton == ButtonState.Released && grid[g].GridSquare.Contains(mouseState.Position) && !grid[g].Taken)
                 {
                     if (_plant == 0)
                     {
-                        plants.Add(new SunProducer(_shadowTexture, tile.GridSquare, 300, (float)gameTime.TotalGameTime.TotalSeconds, _sunNodeTexture));
+                        plants.Add(new SunProducer(_shadowTexture, grid[g].GridSquare, 300, g, (float)gameTime.TotalGameTime.TotalSeconds, _sunNodeTexture));
                     }
                     else if (_plant == 1)
                     {
-                        plants.Add(new ShooterPlant(_shadowTexture, tile.GridSquare, 300, 1, (float)gameTime.TotalGameTime.TotalSeconds, _peaTexture));
+                        plants.Add(new ShooterPlant(_shadowTexture, grid[g].GridSquare, 300, 1, g, (float)gameTime.TotalGameTime.TotalSeconds, _peaTexture));
                     }
                     else if (_plant == 2)
                     {
-                        plants.Add(new WallPlant(_shadowTexture, tile.GridSquare, 4000));
+                        plants.Add(new WallPlant(_shadowTexture, grid[g].GridSquare, 4000, g));
                     }
-
 
                     _deductSun = _sunCost;
                     _plantingTheme.Play();
                     seeds[_plant].TimeStamp = (float)gameTime.TotalGameTime.TotalSeconds;
-                    tile.Taken = true;
+                    grid[g].Taken = true;
                 }
             }
 

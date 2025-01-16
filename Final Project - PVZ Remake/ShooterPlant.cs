@@ -15,12 +15,13 @@ namespace Final_Project___PVZ_Remake
         private float _shootTimer;
         private Texture2D _peaTexture;
 
-        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type, float timeStamp, Texture2D peaTexture)
+        public ShooterPlant(Texture2D texture, Rectangle location, int health, int type, int grid, float timeStamp, Texture2D peaTexture)
         {
             _plantTexture = texture;
             _plantLocation = location;
             _plantHealth = health;
             _shooterType = type;
+            _gridSpace = grid;
             _timeStamp = timeStamp;
             _peaTexture = peaTexture;
         }

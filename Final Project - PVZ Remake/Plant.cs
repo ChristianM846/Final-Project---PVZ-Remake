@@ -13,6 +13,7 @@ namespace Final_Project___PVZ_Remake
         protected Texture2D _plantTexture;
         protected Rectangle _plantLocation;
         protected  int _plantHealth;
+        protected int _gridSpace;
 
         public Texture2D PlantTexture
         {
@@ -30,6 +31,12 @@ namespace Final_Project___PVZ_Remake
         {
             get { return _plantHealth; }
             set { _plantHealth = value; }
+        }
+
+        public int GridSpace
+        {
+            get { return _gridSpace; }
+            set { _gridSpace = value; }
         }
 
         public abstract void Update(GameTime gameTime, List<SunNode> nodes, List<Projectiles> projectiles);
