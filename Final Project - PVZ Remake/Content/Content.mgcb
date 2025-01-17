@@ -40,6 +40,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/TitleFont2.spritefont
 
+#begin Fonts/WinFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/WinFont.spritefont
+
 #begin Images/BucketheadZombie.png
 /importer:TextureImporter
 /processor:TextureProcessor

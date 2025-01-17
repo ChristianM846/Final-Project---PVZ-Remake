@@ -23,12 +23,15 @@ namespace Final_Project___PVZ_Remake
         MouseState mouseState, prevMouseState;
         KeyboardState keyboardState;
 
+        Texture2D rectangleTexture;
+
         //Title Screen Stuff
         Texture2D titleScreenTexture;
         Rectangle window;
 
         //Win Screen Stuff
         Texture2D winScreenTexture; //Also the between screen
+        Rectangle closeRect;
 
         //Lose Screen Stuff
         Texture2D loseScreenTexture;
@@ -101,6 +104,7 @@ namespace Final_Project___PVZ_Remake
         SpriteFont titleFont;
         SpriteFont introFont;
         SpriteFont sunFont;
+        SpriteFont winFont;
 
         // Lists (Not class objects)
         List<int> level1;
@@ -166,8 +170,9 @@ namespace Final_Project___PVZ_Remake
         protected override void Initialize()
         {
             generator = new Random();
-            screen = Screen.Title;
+            screen = Screen.Thanks;
             window = new Rectangle(0, 0, 800, 520);
+            closeRect = new Rectangle(310, 450, 180, 50);
             trashSpot = new Rectangle(1000, 1000, 100, 100);
             sun = 50;
             time = 0;
@@ -240,6 +245,7 @@ namespace Final_Project___PVZ_Remake
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            rectangleTexture = Content.Load<Texture2D>("Images/rectangle");
 
             //Title Screen
             titleScreenTexture = Content.Load<Texture2D>("Images/TitleScreen");
@@ -250,6 +256,8 @@ namespace Final_Project___PVZ_Remake
 
             //Win Screen
             winScreenTexture = Content.Load<Texture2D>("Images/LevelComplete"); //Is also the between screen
+            winFont = Content.Load<SpriteFont>("Fonts/WinFont");
+
 
             //Lose Screen
             loseScreenTexture = Content.Load<Texture2D>("Images/GameOver");
@@ -426,7 +434,7 @@ namespace Final_Project___PVZ_Remake
                             plants.RemoveAt(p);
                             p--;
                         }
-                    }                  
+                    }
 
                     if (levelTime >= 20)
                     {
@@ -485,7 +493,7 @@ namespace Final_Project___PVZ_Remake
                     }
 
                     foreach (Zombie zombie in zombies)
-                    {                 
+                    {
                         if (zombie.ZombieRect.X == 150)
                         {
                             screen = Screen.GameOver;
@@ -495,36 +503,51 @@ namespace Final_Project___PVZ_Remake
                             gameOverTheme.Play();
                         }
                     }
+                }
 
+                if (sun == 0)
+                {
+                    sunBankLocation = new Vector2(224, 53);
+                }
+                else if (sun > 0 && sun < 100)
+                {
+                    sunBankLocation = new Vector2(221, 53);
+                }
+                else if (sun >= 100 && sun < 200)
+                {
+                    sunBankLocation = new Vector2(218, 53);
+                }
+                else if (sun >= 200 && sun < 1000)
+                {
+                    sunBankLocation = new Vector2(216, 53);
+                }
+                else if (sun >= 1000 && sun < 2000)
+                {
+                    sunBankLocation = new Vector2(213, 53);
+                }
+                else
+                {
+                    sunBankLocation = new Vector2(210, 53);
                 }
             }
-
-            if (sun == 0)
+            else if (screen == Screen.Between)
             {
-                sunBankLocation = new Vector2(224, 53);
+                //not in yet
             }
-            else if (sun > 0 && sun < 100)
+            else if (screen == Screen.GameOver)
             {
-                sunBankLocation = new Vector2(221, 53);
+                if (window.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    this.Exit();
+                }
             }
-            else if (sun >= 100 && sun < 200)
+            else if (screen == Screen.Thanks)
             {
-                sunBankLocation = new Vector2(218, 53);
-            }
-            else if (sun >= 200 && sun < 1000)
-            {
-                sunBankLocation = new Vector2(216, 53);
-            }
-            else if (sun >= 1000 && sun < 2000)
-            {
-                sunBankLocation = new Vector2(213, 53);
-            }
-            else
-            {
-                sunBankLocation = new Vector2(210, 53);
-            }
-
-
+                if (closeRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    this.Exit();
+                }
+            }           
 
             prevMouseState = Mouse.GetState();
             base.Update(gameTime);
@@ -633,7 +656,6 @@ namespace Final_Project___PVZ_Remake
 
                 shovel.Draw(_spriteBatch);
 
-
                 if (levelTime < 1)
                 {
                     _spriteBatch.DrawString(titleFont, "Ready", new Vector2(400, 250), Color.Red);
@@ -646,15 +668,26 @@ namespace Final_Project___PVZ_Remake
                 {
                     _spriteBatch.DrawString(titleFont, "PLANT!", new Vector2(400, 250), Color.Red);
                 }
-
-
+            }
+            else if (screen == Screen.Between)
+            {
+                // not in yet
             }
             else if (screen == Screen.GameOver)
             {
                 _spriteBatch.Draw(loseScreenTexture, window, Color.White);
             }
-
-
+            else if (screen == Screen.Thanks)
+            {
+                _spriteBatch.Draw(winScreenTexture, window, Color.White);
+                _spriteBatch.Draw(rectangleTexture, closeRect, Color.Black);
+                _spriteBatch.DrawString(winFont, "Thank you for playing!", new Vector2(145, 13), Color.Black);
+                _spriteBatch.DrawString(winFont, "Thats all I have for now", new Vector2(140, 100), Color.Black);
+                _spriteBatch.DrawString(winFont, "Maybe Ill add more, maybe I wont.", new Vector2(20, 150), Color.Black);
+                _spriteBatch.DrawString(winFont, "But until then...", new Vector2(230, 200), Color.Black);
+                _spriteBatch.DrawString(winFont, "Watch out for your brains!", new Vector2(80, 250), Color.Black);
+                _spriteBatch.DrawString(introFont, "Click to close", new Vector2(337, 468), Color.White);
+            }
 
             _spriteBatch.End();
             base.Draw(gameTime);
