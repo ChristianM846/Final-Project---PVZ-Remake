@@ -45,7 +45,7 @@ namespace Final_Project___PVZ_Remake
 
             for (int z = 0; z < zombies.Count; z++)
             {
-                if (_location.Intersects(zombies[z].ZombieRect))
+                if (_location.Intersects(zombies[z].ZombieRect) && _hit == false)
                 {
                     _hit = true;
                     zombies[z].Health -= _dmgValue;

@@ -19,6 +19,7 @@ namespace Final_Project___PVZ_Remake
         int song;
         float time;
         float levelTime;
+        bool eating;
 
         MouseState mouseState, prevMouseState;
         KeyboardState keyboardState;
@@ -170,7 +171,7 @@ namespace Final_Project___PVZ_Remake
         protected override void Initialize()
         {
             generator = new Random();
-            screen = Screen.Thanks;
+            screen = Screen.Title;
             window = new Rectangle(0, 0, 800, 520);
             closeRect = new Rectangle(310, 450, 180, 50);
             trashSpot = new Rectangle(1000, 1000, 100, 100);
@@ -356,6 +357,8 @@ namespace Final_Project___PVZ_Remake
                 levelTime = (float)gameTime.TotalGameTime.TotalSeconds - time;
                 if (levelTime > 3)
                 {
+                    eating = false;
+
                     if (grasswalkThemeInstance.State == SoundState.Stopped && loonboonThemeInstance.State == SoundState.Stopped)
                     {
                         if (song == 1)
@@ -446,7 +449,7 @@ namespace Final_Project___PVZ_Remake
                             {
                                 if (zombies[z].ZombieRect.Intersects(plants[p].PlantLocation))
                                 {
-                                    eatingThemeInstance.Play();
+                                    eating = true;
                                 }
                             }
 
@@ -458,6 +461,16 @@ namespace Final_Project___PVZ_Remake
                                 z--;
                             }
                         }
+
+                        if (eating == true)
+                        {
+                            eatingThemeInstance.Play();
+                        }
+                        else
+                        {
+                            eatingThemeInstance.Stop();
+                        }
+
                     }
 
                     level1Spawner.Update(zombies);
@@ -484,13 +497,15 @@ namespace Final_Project___PVZ_Remake
                         winTheme.Play();
                     }
 
-                    for (int z = 0; z < zombies.Count; z++)
-                    {
-                        if (zombies[z].ZombieRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
-                        {
-                            zombies[z].Health = 0;
-                        }
-                    }
+                    //use for testing
+
+                    //for (int z = 0; z < zombies.Count; z++)
+                    //{
+                    //    if (zombies[z].ZombieRect.Contains(mouseState.Position) && mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                    //    {
+                    //        zombies[z].Health = 0;
+                    //    }
+                    //}
 
                     foreach (Zombie zombie in zombies)
                     {
